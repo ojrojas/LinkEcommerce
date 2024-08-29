@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A4093905-E799-40EE-ADA5-98AD20C182C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servicios", "Servicios", "{95A35BEA-49AA-431C-AA65-AE1F2B3C81C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canasta", "src\Servicios\Canasta\Canasta.csproj", "{86C2BE6D-D97B-4539-A7BB-196C39F2518A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pagos", "src\Servicios\Pagos\Pagos.csproj", "{05E0FC9C-B90D-43C0-95E9-46C3149A31D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identidad", "src\Servicios\Identidad\Identidad.csproj", "{CBFB8009-D932-4E71-8D3B-AACC45FBF63D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordenes", "src\Servicios\Ordenes\Ordenes.csproj", "{BA4022E1-E498-41FB-9278-1AAD0E4DC5C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkEcommerce.AppHost", "src\LinkEcommerce.AppHost\LinkEcommerce.AppHost.csproj", "{1C9CE658-E818-4399-87FA-CD7727ABE95D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkEcommerce.ServiceDefaults", "src\LinkEcommerce.ServiceDefaults\LinkEcommerce.ServiceDefaults.csproj", "{A36345E9-0A51-42A1-8067-36DE485C4F7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86C2BE6D-D97B-4539-A7BB-196C39F2518A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86C2BE6D-D97B-4539-A7BB-196C39F2518A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86C2BE6D-D97B-4539-A7BB-196C39F2518A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86C2BE6D-D97B-4539-A7BB-196C39F2518A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05E0FC9C-B90D-43C0-95E9-46C3149A31D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05E0FC9C-B90D-43C0-95E9-46C3149A31D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05E0FC9C-B90D-43C0-95E9-46C3149A31D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05E0FC9C-B90D-43C0-95E9-46C3149A31D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBFB8009-D932-4E71-8D3B-AACC45FBF63D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBFB8009-D932-4E71-8D3B-AACC45FBF63D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBFB8009-D932-4E71-8D3B-AACC45FBF63D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBFB8009-D932-4E71-8D3B-AACC45FBF63D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA4022E1-E498-41FB-9278-1AAD0E4DC5C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA4022E1-E498-41FB-9278-1AAD0E4DC5C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA4022E1-E498-41FB-9278-1AAD0E4DC5C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA4022E1-E498-41FB-9278-1AAD0E4DC5C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C9CE658-E818-4399-87FA-CD7727ABE95D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C9CE658-E818-4399-87FA-CD7727ABE95D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C9CE658-E818-4399-87FA-CD7727ABE95D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C9CE658-E818-4399-87FA-CD7727ABE95D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A36345E9-0A51-42A1-8067-36DE485C4F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A36345E9-0A51-42A1-8067-36DE485C4F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A36345E9-0A51-42A1-8067-36DE485C4F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A36345E9-0A51-42A1-8067-36DE485C4F7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{95A35BEA-49AA-431C-AA65-AE1F2B3C81C0} = {A4093905-E799-40EE-ADA5-98AD20C182C1}
+		{86C2BE6D-D97B-4539-A7BB-196C39F2518A} = {95A35BEA-49AA-431C-AA65-AE1F2B3C81C0}
+		{05E0FC9C-B90D-43C0-95E9-46C3149A31D4} = {95A35BEA-49AA-431C-AA65-AE1F2B3C81C0}
+		{CBFB8009-D932-4E71-8D3B-AACC45FBF63D} = {95A35BEA-49AA-431C-AA65-AE1F2B3C81C0}
+		{BA4022E1-E498-41FB-9278-1AAD0E4DC5C8} = {95A35BEA-49AA-431C-AA65-AE1F2B3C81C0}
+		{1C9CE658-E818-4399-87FA-CD7727ABE95D} = {A4093905-E799-40EE-ADA5-98AD20C182C1}
+		{A36345E9-0A51-42A1-8067-36DE485C4F7A} = {A4093905-E799-40EE-ADA5-98AD20C182C1}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+@Canasta_HostAddress = http://localhost:5100
+
+GET {{Canasta_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
