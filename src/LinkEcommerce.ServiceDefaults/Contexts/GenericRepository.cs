@@ -1,8 +1,9 @@
 namespace LinkEcommerce.ServiceDefaults.Contexts;
 
-public class GenericRepository<T> :IGenericRepository<T> where T : BaseEntity, IAggregateRoot
+public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity, IAggregateRoot
 {
     private readonly ILoggerApplicationService<GenericRepository<T>> _logger;
+    private readonly ISpecificationEvaluator _specificationEvaluator;
     private readonly DbContext _context;
 
     /// <summary>
@@ -11,13 +12,22 @@ public class GenericRepository<T> :IGenericRepository<T> where T : BaseEntity, I
     /// <param name="logger">logger application</param>
     /// <param name="context">context application</param>
     /// <param name="specificationEvaluator">specification evaluator</param>
-    public GenericRepository(ILoggerApplicationService<GenericRepository<T>> logger, DbContext context)
+    public GenericRepository(ILoggerApplicationService<GenericRepository<T>> logger, DbContext context, ISpecificationEvaluator specificationEvaluator)
     {
         _logger = logger;
         _context = context;
+        _specificationEvaluator = specificationEvaluator;
     }
 
-      public async ValueTask<T> CreateAsync(T entity, CancellationToken cancellationToken)
+    /// <summary>
+    /// Generic Repository "Service Inject"
+    /// </summary>
+    /// <param name="logger">logger application</param>
+    /// <param name="context">context application</param>
+    public GenericRepository(ILoggerApplicationService<GenericRepository<T>> logger, DbContext context) : this(logger, context, AppSpecificationEvaluator.Instance) { }
+
+
+    public async ValueTask<T> CreateAsync(T entity, CancellationToken cancellationToken)
     {
         await _context.Set<T>().AddAsync(entity, cancellationToken);
         await SaveAsync(cancellationToken);
@@ -69,5 +79,49 @@ public class GenericRepository<T> :IGenericRepository<T> where T : BaseEntity, I
     {
         _logger.LogInformation($"specification model {typeof(T)}");
         return await _context.Set<T>().FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async ValueTask<IEnumerable<T>> ListAsync(ISpecification<T> spec, CancellationToken cancellationToken)
+    {
+        _logger.LogInformation($"Specification settled {(spec)}");
+        var specification = ApplySpecification(spec);
+        _logger.LogInformation($"Get all entities type {typeof(T)}");
+        return await specification.ToListAsync(cancellationToken);
+    }
+
+    public async ValueTask<T> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken)
+    {
+        _logger.LogInformation($"specification model {typeof(T)}");
+        var spec = ApplySpecification(specification);
+        return await spec.FirstOrDefaultAsync(cancellationToken) ?? null!;
+    }
+
+    /// <summary>
+    /// Apply Specification search property model
+    /// </summary>
+    /// <param name="spec">Property model specification</param>
+    /// <param name="evaluateCriteriaOnly">Evaluate only criteria false</param>
+    /// <returns>IQueryable Model entity</returns>
+    protected virtual IQueryable<T> ApplySpecification(ISpecification<T> spec, bool evaluateCriteriaOnly = default)
+    {
+        ArgumentNullException.ThrowIfNull(spec);
+        _logger.LogInformation($"Query result type {typeof(T)}");
+        return _specificationEvaluator.GetQuery(_context.Set<T>().AsQueryable(), spec, evaluateCriteriaOnly);
+    }
+
+    /// <summary>
+    /// Apply Specification 
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
+    /// <param name="specification">specification instance model</param>
+    /// <returns>IQueryable model entity</returns>
+    protected virtual IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
+    {
+        ArgumentNullException.ThrowIfNull(specification);
+
+        if (specification.Selector is null) throw new SelectorNotFoundException();
+        _logger.LogInformation($"Query result type {typeof(T)}");
+
+        return _specificationEvaluator.GetQuery(_context.Set<T>().AsQueryable(), specification);
     }
 }

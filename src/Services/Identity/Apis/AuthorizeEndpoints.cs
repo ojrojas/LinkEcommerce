@@ -20,7 +20,7 @@ public static class AuthorizeEndpoints
 
     public static async ValueTask<IResult> GetToken(HttpContext context, IUserApplicationServices services)
     {
-        return await services.LoginAsync(context, CancellationToken.None);
+        return await services.LoginAsync(context);
     }
 
     public static async ValueTask<IResult> AuthorizeApp(

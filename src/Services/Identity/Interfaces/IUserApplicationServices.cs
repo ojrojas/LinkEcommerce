@@ -9,11 +9,10 @@ public interface IUserApplicationServices
 
     ValueTask<DeleteUserResponse> DeleteUserAsync(
         DeleteUserRequest request, CancellationToken cancellationToken);
-    ValueTask<GetUserByIdResponse> GetUserByIdAsync(GetUserByIdRequest request,
-                                                                     CancellationToken cancellationToken);
+    ValueTask<GetUserByIdResponse> GetUserByIdAsync(GetUserByIdRequest request);
 
-    ValueTask<IResult> LoginAsync(HttpContext context, CancellationToken cancellationToken);
-    ValueTask<IResult> LoginAsync(LoginRequest request, CancellationToken cancellationToken);
+    ValueTask<IResult> LoginAsync(HttpContext context);
+    ValueTask<IResult> LoginAsync(LoginRequest request);
 
     ValueTask<GetAllUsersResponse> GetAllUsersAsync(GetAllUsersRequest request, CancellationToken cancellationToken);
 }

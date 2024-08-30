@@ -2,6 +2,7 @@ global using LinkEcommerce.ServiceDefaults.Contexts;
 global using Microsoft.AspNetCore.Identity;
 
 global using LinkEcommerce.ServiceDefaults.Loggers;
+global using LinkEcommerce.ServiceDefaults.Loggers;
 global using LinkEcommerce.Services.Identity.Interfaces;
 global using LinkEcommerce.Services.Identity.Models;
 global using Microsoft.AspNetCore;

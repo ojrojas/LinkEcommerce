@@ -1,5 +1,8 @@
-﻿namespace LinkEcommerce.Services.Identity.Pages;
+﻿using Microsoft.AspNetCore.Authorization;
 
+namespace LinkEcommerce.Services.Identity.Pages;
+
+[Authorize]
 public class PrivacyModel : PageModel
 {
     private readonly ILogger<PrivacyModel> _logger;

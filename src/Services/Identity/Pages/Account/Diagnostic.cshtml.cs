@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
 namespace LinkEcommerce.Services.Identity.Pages;
 
 public class DiagnosticModel : PageModel

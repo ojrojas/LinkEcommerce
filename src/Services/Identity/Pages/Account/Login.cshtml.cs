@@ -41,7 +41,7 @@ public class LoginModel : PageModel
             return Page();
 
         // var result = await _signInManager.PasswordSignInAsync(Login.UserName, Login.Password, true, false);
-        var result = await _services.LoginAsync(Login, CancellationToken.None);
+        var result = await _services.LoginAsync(Login);
 
          //_logger.LogInformation($"Result login : {result.Succeeded}");
 

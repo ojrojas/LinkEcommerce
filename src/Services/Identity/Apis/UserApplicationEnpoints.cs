@@ -24,7 +24,7 @@ public static class UserApplicationEndpoints
         [FromServices] IUserApplicationServices services,
         [FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        return TypedResults.Ok(await services.GetUserByIdAsync(new(id), cancellationToken));
+        return TypedResults.Ok(await services.GetUserByIdAsync(new(id)));
     }
 
     public static async ValueTask<Results<Ok<DeleteUserResponse>, BadRequest<string>, ProblemHttpResult>> DeleteUserApplication(

@@ -12,12 +12,13 @@ public class UserApplicationServices : IUserApplicationServices
 
     public UserApplicationServices(
         UserManager<UserApplication> userManager,
-        RoleManager<UserType> roleManager,
         ILoggerApplicationService<UserApplicationServices> logger,
-        SignInManager<UserApplication> signInManager,
-        IOpenIddictApplicationManager applicationManager,
-        IOpenIddictAuthorizationManager authorizationManager,
-        IOpenIddictScopeManager scopeManager)
+        SignInManager<UserApplication> signInManager
+        // RoleManager<UserType> roleManager,
+        // IOpenIddictApplicationManager applicationManager,
+        // IOpenIddictAuthorizationManager authorizationManager,
+        // IOpenIddictScopeManager scopeManager
+        )
     {
         _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         _logger = logger ?? throw new ArgumentNullException(nameof(userManager));
@@ -44,6 +45,13 @@ public class UserApplicationServices : IUserApplicationServices
         else
             _logger.LogError(response, "Error to created user application");
 
+        if(cancellationToken.IsCancellationRequested && !identityResult.Succeeded)
+        {
+            _logger.LogWarning("User application request is cancelled");
+            await _userManager.DeleteAsync(RemapedUserApplication(response.UserCreated));
+            response.UserCreated = null;
+        }
+
         return response;
     }
 
@@ -53,6 +61,7 @@ public class UserApplicationServices : IUserApplicationServices
         UpdateUserResponse response = new(request.CorrelationId);
         _logger.LogInformation(response, "Update user application request");
         var userApplication = RemapedUserApplication(request.User);
+        var currentUserApplication = await _userManager.FindByIdAsync(request.User.Id.ToString());
         var identityResult = await _userManager.UpdateAsync(userApplication);
 
         if (identityResult.Succeeded)
@@ -62,6 +71,13 @@ public class UserApplicationServices : IUserApplicationServices
         }
         else
             _logger.LogError(response, "Error to created user application");
+
+         if(cancellationToken.IsCancellationRequested && !identityResult.Succeeded)
+        {
+            _logger.LogWarning("User application request is cancelled");
+            await _userManager.UpdateAsync(currentUserApplication);
+            response.UserUpdated = null;
+        }
 
         return response;
     }
@@ -82,10 +98,17 @@ public class UserApplicationServices : IUserApplicationServices
             _logger.LogError(response, "Error to delete user application");
         }
 
+        if(cancellationToken.IsCancellationRequested && !identityResult.Succeeded)
+        {
+            _logger.LogWarning("User application request is cancelled");
+            await _userManager.UpdateAsync(userApplication);
+            response.UserDeleted = false;
+        }
+
         return response;
     }
 
-    public async ValueTask<GetUserByIdResponse> GetUserByIdAsync(GetUserByIdRequest request, CancellationToken cancellationToken)
+    public async ValueTask<GetUserByIdResponse> GetUserByIdAsync(GetUserByIdRequest request)
     {
         GetUserByIdResponse response = new(request.CorrelationId);
         _logger.LogInformation(response, "Get user application id request");
@@ -97,7 +120,7 @@ public class UserApplicationServices : IUserApplicationServices
         return response;
     }
 
-    public async ValueTask<IResult> LoginAsync(LoginRequest request, CancellationToken cancellationToken)
+    public async ValueTask<IResult> LoginAsync(LoginRequest request)
     {
         LoginResponse response = new(request.CorrelationId);
         _logger.LogInformation(response, "login user application request");
@@ -162,7 +185,7 @@ public class UserApplicationServices : IUserApplicationServices
         return Results.BadRequest("Failed to login request or not posible");
     }
 
-    public async ValueTask<IResult> LoginAsync(HttpContext context, CancellationToken cancellationToken)
+    public async ValueTask<IResult> LoginAsync(HttpContext context)
     {
         var request = context.GetOpenIddictServerRequest() ??
             throw new InvalidOperationException("Error request operation not found a valid request auth openid");
@@ -242,30 +265,32 @@ public class UserApplicationServices : IUserApplicationServices
         return response;
     }
 
-    private static UserApplication RemapedUserApplication(UserViewModel register)
+    private static UserApplication RemapedUserApplication(UserViewModel userViewModel)
     {
+        ArgumentNullException.ThrowIfNull(userViewModel);
         return new UserApplication
         {
-            Id = register.Id,
-            Name = register.Name,
-            MiddleName = register.MiddleName,
-            LastName = register.LastName,
-            SurName = register.SurName,
-            IdentificationType = register.IdentificationType,
-            IdentificationTypeId = register.IdentificationTypeId,
-            IdentificationNumber = register.IdentificationNumber,
-            BirthDate = register.BirthDate,
-            Address = register.Address,
-            Contact = register.Contact,
-            Card = register.Card,
-            CardId = register.CardId,
-            Company = register.Company,
-            CompanyId = register.CompanyId,
+            Id = userViewModel.Id,
+            Name = userViewModel.Name,
+            MiddleName = userViewModel.MiddleName,
+            LastName = userViewModel.LastName,
+            SurName = userViewModel.SurName,
+            IdentificationType = userViewModel.IdentificationType,
+            IdentificationTypeId = userViewModel.IdentificationTypeId,
+            IdentificationNumber = userViewModel.IdentificationNumber,
+            BirthDate = userViewModel.BirthDate,
+            Address = userViewModel.Address,
+            Contact = userViewModel.Contact,
+            Card = userViewModel.Card,
+            CardId = userViewModel.CardId,
+            Company = userViewModel.Company,
+            CompanyId = userViewModel.CompanyId,
         };
     }
 
     private static UserViewModel RemapedRegisterUserApplication(UserApplication userApplication)
     {
+        ArgumentNullException.ThrowIfNull(userApplication);
         return new UserViewModel
         {
             Id = userApplication.Id,

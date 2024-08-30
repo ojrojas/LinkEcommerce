@@ -35,6 +35,8 @@ global using Asp.Versioning.ApiExplorer;
 global using Asp.Versioning;
 
 global using Microsoft.AspNetCore.Mvc.ApiExplorer;
+global using Ardalis.Specification;
+global using Ardalis.Specification.EntityFrameworkCore;
 
 
 

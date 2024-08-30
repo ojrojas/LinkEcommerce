@@ -7,7 +7,7 @@
     <title>@ViewData["Title"] - Identity.Api</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Identity.Api.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Identity.styles.css" asp-append-version="true" />
 </head>
 
 <body>
@@ -24,7 +24,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li><a class="nav-link text-dark" href="/connect/logout">Logout</a></li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li><a class="nav-link text-dark" href="/connect/logout">Logout</a></li>
+                        }
                     </ul>
                 </div>
             </div>
