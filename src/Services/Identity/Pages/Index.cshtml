@@ -1,0 +1,14 @@
+﻿@page
+@using System.Diagnostics
+@model IndexModel
+@{
+    ViewData["Title"] = "Identity Server";
+    var version = FileVersionInfo.GetVersionInfo(typeof(OpenIddictServerBuilder).Assembly.Location).ProductVersion.Split('+').First();
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome Identity Server - OpenIddict (@version)</h1>
+    <p>This application is the server application.</p>
+    <p>Click<a asp-area="" asp-page="/Account/Diagnostic"> here </a>to see the claim user</p>
+
+</div>

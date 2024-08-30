@@ -1,17 +1,44 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var identidad = builder.AddProject<Projects.Identidad>("identidad")
+var redis = builder.AddRedis("redis");
+var rabbitMq = builder.AddRabbitMQ("eventbus");
+var postgres = builder.AddPostgres("postgres")
+.WithImage("ankane/pgvector")
+.WithImageTag("latest")
+.WithPgAdmin();
+
+var catalogDb = postgres.AddDatabase("catalogdb");
+var identityDb = postgres.AddDatabase("identitydb");
+var orderDb = postgres.AddDatabase("orderingdb");
+
+var identity = builder.AddProject<Projects.Identity>("identity-ecommerce")
+.WithReference(identityDb)
  .WithExternalHttpEndpoints();
-var canasta = builder.AddProject<Projects.Canasta>("canasta");
-var ordenes = builder.AddProject<Projects.Ordenes>("ordenes");
-var pagos = builder.AddProject<Projects.Pagos>("pagos");
+
+var basket = builder.AddProject<Projects.Basket>("basket-ecommerce")
+.WithReference(catalogDb)
+ .WithExternalHttpEndpoints();
+
+var orders = builder.AddProject<Projects.Orders>("orders-ecommerce")
+.WithReference(orderDb)
+ .WithExternalHttpEndpoints();
+
+var catalogs = builder.AddProject<Projects.Catalogs>("catalogs-ecommerce")
+.WithReference(catalogDb)
+.WithExternalHttpEndpoints();
+
+var payments = builder.AddProject<Projects.Payments>("payments-ecommerce");
 
 var webapp = builder.AddNpmApp("angular", "../Webs/link-app")
-.WithReference(identidad)
+.WithReference(identity)
 .WithHttpEndpoint(env: "PORT")
 .WithExternalHttpEndpoints()
 .PublishAsDockerFile();
 
-
+identity.WithEnvironment("IdentityApiClient", identity.GetEndpoint("http"))
+.WithEnvironment("BasketApiClient", basket.GetEndpoint("http"))
+.WithEnvironment("OrderingApiClient", orders.GetEndpoint("http"))
+.WithEnvironment("Identity__Url", identity.GetEndpoint("http"))
+.WithEnvironment("CatalogApiClient", catalogs.GetEndpoint("http"));
 
 builder.Build().Run();

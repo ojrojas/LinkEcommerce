@@ -1,0 +1,27 @@
+@page 
+@model LoginModel
+
+@{
+    ViewData["title"] = "Login";
+}
+
+<div class="text-center">
+    <form method="post">
+        <div class="row">
+            <div class="col">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="mb-3">
+                    <label asp-for="Login.UserName" class="form-label">Email address</label>
+                    <input type="email" class="form-control" asp-for="Login.UserName" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Login.Password" class="form-label">Password</label>
+                    <input type="password" class="form-control" asp-for="Login.Password">
+                </div>
+                <input asp-for="Login.ReturnUrl" type="hidden" />
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

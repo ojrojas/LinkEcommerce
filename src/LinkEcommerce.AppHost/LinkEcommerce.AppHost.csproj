@@ -10,15 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Servicios\Ordenes\Ordenes.csproj" />
-    <ProjectReference Include="..\Servicios\Canasta\Canasta.csproj" />
-    <ProjectReference Include="..\Servicios\Identidad\Identidad.csproj" />
-    <ProjectReference Include="..\Servicios\Pagos\Pagos.csproj" />
+    <ProjectReference Include="..\Services\Orders\Orders.csproj" />
+    <ProjectReference Include="..\Services\Basket\Basket.csproj" />
+    <ProjectReference Include="..\Services\Identity\Identity.csproj" />
+    <ProjectReference Include="..\Services\Payments\Payments.csproj" />
+    <ProjectReference Include="..\Services\Catalogs\Catalogs.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost" Version="8.1.0" />
-    <PackageReference Include="Aspire.Hosting.NodeJs" Version="8.1.0" />
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="8.2.0" />
+    <PackageReference Include="Aspire.Hosting.NodeJs" Version="8.2.0" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="8.2.0" />
+    <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="8.2.0" />
+   <PackageReference Include="Aspire.Hosting.Redis" Version="8.2.0" />
   </ItemGroup>
 
   <Target Name="RestoreNpm" BeforeTargets="Build" Condition=" '$(DesignTimeBuild)' != 'true' ">
