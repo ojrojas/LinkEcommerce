@@ -66,33 +66,33 @@ public class CatalogService(
         CatalogItemSpecification spec = new(request.pageSize, request.PageIndex, request.BrandId);
         var count = await context.CountAsync(cancellationToken);
         var items = await context.ListAsync(spec, cancellationToken);
-        response.CatalogItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.pageSize, count, items);
+        response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.pageSize, count, items);
         logger.LogInformation(response, "Get catalogitem by brand_id successful");
 
         return response;
     }
 
-    public async ValueTask<GetCatalogItemsByBrandIdResponse> GetCatalogItemsByBrandIdAndTypeIdAsync(PaginationByBrandIdAndTypeIdRequest request, CancellationToken cancellationToken)
+    public async ValueTask<GetItemsByBrandAndTypeIdResponse> GetCatalogItemsByBrandIdAndTypeIdAsync(PaginationByBrandIdAndTypeIdRequest request, CancellationToken cancellationToken)
     {
-        GetCatalogItemsByBrandIdResponse response = new(request.CorrelationId);
+        GetItemsByBrandAndTypeIdResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by brand_id and type_id request");
         CatalogItemSpecification spec = new(request.pageSize, request.PageIndex, request.BrandId, request.TypeId);
         var count = await context.CountAsync(cancellationToken);
         var items = await context.ListAsync(spec, cancellationToken);
-        response.CatalogItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.pageSize, count, items);
+        response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.pageSize, count, items);
         logger.LogInformation(response, "Get catalogitem by brand_id and type_id successful");
 
         return response;
     }
 
-    public async ValueTask<GetCatalogItemsByBrandIdResponse> GetCatalogItemByNamesAsync(PaginationByNamesRequest request, CancellationToken cancellationToken)
+    public async ValueTask<GetCatalogItemsByNamesResponse> GetCatalogItemByNamesAsync(PaginationByNamesRequest request, CancellationToken cancellationToken)
     {
-        GetCatalogItemsByBrandIdResponse response = new(request.CorrelationId);
+        GetCatalogItemsByNamesResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by names request");
         CatalogItemSpecification spec = new(request.Names, request.pageSize, request.PageIndex);
         var count = await context.CountAsync(cancellationToken);
         var items = await context.ListAsync(spec, cancellationToken);
-        response.CatalogItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.pageSize, count, items);
+        response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.pageSize, count, items);
         logger.LogInformation(response, "Get catalogitem by names successful");
 
         return response;

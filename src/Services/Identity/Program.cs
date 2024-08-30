@@ -1,5 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
+ Log.Logger = LoggerPrinter.CreateSerilogLogger("api", "identity");
+
 builder.Services.AddEndpointsApiExplorer();
 
 // Add services to the container.

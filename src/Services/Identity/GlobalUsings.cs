@@ -2,7 +2,6 @@ global using LinkEcommerce.ServiceDefaults.Contexts;
 global using Microsoft.AspNetCore.Identity;
 
 global using LinkEcommerce.ServiceDefaults.Loggers;
-global using LinkEcommerce.ServiceDefaults.Loggers;
 global using LinkEcommerce.Services.Identity.Interfaces;
 global using LinkEcommerce.Services.Identity.Models;
 global using Microsoft.AspNetCore;
@@ -35,8 +34,7 @@ global using System.Web;
 
 global using Microsoft.AspNetCore.Http.HttpResults;
 global using Microsoft.AspNetCore.Mvc.RazorPages;
-global using Microsoft.AspNetCore.Mvc;
-global using Microsoft.AspNetCore.Mvc.RazorPages;
+global using Serilog;
 
 
 global using Microsoft.Extensions.Primitives;
