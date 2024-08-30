@@ -49,7 +49,7 @@ public class CatalogService(
         return response;
     }
 
-    public async ValueTask<GetCatalogItemByIdResponse> GetCatalogItemById(GetCatalogItemByIdRequest request, CancellationToken cancellationToken)
+    public async ValueTask<GetCatalogItemByIdResponse> GetCatalogItemByIdAsync(GetCatalogItemByIdRequest request, CancellationToken cancellationToken)
     {
         GetCatalogItemByIdResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by id request");

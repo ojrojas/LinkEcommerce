@@ -11,3 +11,5 @@ global using LinkEcommerce.ServiceDefaults.Loggers;
 global using Ardalis.Specification;
 global using LinkEcommerce.Services.Catalogs.Dtos;
 global using LinkEcommerce.Services.Catalogs.Specifications;
+global using Microsoft.AspNetCore.Http.HttpResults;
+global using Microsoft.IdentityModel.Tokens;
