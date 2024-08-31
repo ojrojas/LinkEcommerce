@@ -1,6 +1,6 @@
 namespace LinkEcommerce.ServiceDefaults.Contexts;
 
-public interface IGenericRepository<T> where T : BaseEntity,IAggregateRoot
+public interface IGenericRepository<T> where T : class, IAggregateRoot
 {
     public ValueTask<T> CreateAsync(T entity, CancellationToken cancellationToken);
     public ValueTask<T> UpdateAsync(T entity, CancellationToken cancellationToken);

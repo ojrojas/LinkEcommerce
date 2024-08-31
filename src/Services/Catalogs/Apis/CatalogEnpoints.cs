@@ -1,6 +1,3 @@
-
-
-
 namespace LinkEcommerce.Services.Catalogs.Apis;
 
 public static class CatalogsEndpoint

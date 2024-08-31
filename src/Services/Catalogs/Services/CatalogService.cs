@@ -1,10 +1,19 @@
 namespace LinkEcommerce.Services.Catalogs.Services;
 
-public class CatalogService(
-    ILoggerApplicationService<CatalogService> logger,
-    IGenericRepository<CatalogItem> context
-) : ICatalogService
+public class CatalogService : ICatalogService
 {
+    private readonly ILoggerApplicationService<CatalogService> logger;
+    private readonly IGenericRepository<CatalogItem> context;
+
+    public CatalogService(
+        ILoggerApplicationService<CatalogService> logger,
+        IGenericRepository<CatalogItem> context
+)
+    {
+        this.logger = logger;
+        this.context = context;
+    }
+
     public async ValueTask<CreateCatalogItemResponse> CreateCatalogItemAsync(CreateCatalogItemRequest request, CancellationToken cancellationToken)
     {
         CreateCatalogItemResponse response = new(request.CorrelationId);

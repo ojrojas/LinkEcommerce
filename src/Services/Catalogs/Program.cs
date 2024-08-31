@@ -1,5 +1,3 @@
-using LinkEcommerce.Services.Catalogs.DI;
-
 var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = LoggerPrinter.CreateSerilogLogger("api", "catalog");
@@ -15,8 +13,10 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-app.MapCatalogEndpointsV1();
-app.UseDefaultOpenApi();
+app.MapGet("/", () => "Hola Mundo");
+
+// app.MapCatalogEndpointsV1();
+// app.UseDefaultOpenApi();
 
 
 app.Run();

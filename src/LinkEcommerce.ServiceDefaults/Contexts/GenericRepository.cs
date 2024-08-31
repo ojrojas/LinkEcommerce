@@ -1,6 +1,6 @@
 namespace LinkEcommerce.ServiceDefaults.Contexts;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity, IAggregateRoot
+public class GenericRepository<T> : IGenericRepository<T> where T : class, IAggregateRoot
 {
     private readonly ILoggerApplicationService<GenericRepository<T>> _logger;
     private readonly ISpecificationEvaluator _specificationEvaluator;
@@ -24,8 +24,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity, 
     /// </summary>
     /// <param name="logger">logger application</param>
     /// <param name="context">context application</param>
-    public GenericRepository(ILoggerApplicationService<GenericRepository<T>> logger, DbContext context) : this(logger, context, AppSpecificationEvaluator.Instance) { }
-
+    public GenericRepository(ILoggerApplicationService<GenericRepository<T>> logger, DbContext context) : 
+        this(logger, context, AppSpecificationEvaluator.Instance) 
+    { 
+    }
 
     public async ValueTask<T> CreateAsync(T entity, CancellationToken cancellationToken)
     {

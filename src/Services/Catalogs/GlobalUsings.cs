@@ -18,4 +18,6 @@ global using LinkEcommerce.ServiceDefaults.Extensions;
 global using LinkEcommerce.Services.Catalogs.Data;
 global using Microsoft.IdentityModel.Logging;
 global using OpenIddict.Validation.AspNetCore;
+global using LinkEcommerce.Services.Catalogs.DI;
+global using Microsoft.AspNetCore.Mvc;
 global using Serilog;

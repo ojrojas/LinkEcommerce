@@ -37,6 +37,7 @@ global using Asp.Versioning;
 global using Microsoft.AspNetCore.Mvc.ApiExplorer;
 global using Ardalis.Specification;
 global using Ardalis.Specification.EntityFrameworkCore;
+global using System.ComponentModel.DataAnnotations;
 
 global using Serilog;
 

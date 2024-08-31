@@ -7,7 +7,7 @@ internal static class Extensions
         var configuration = builder.Configuration;
         var services = builder.Services;
        
-        builder.AddNpgsqlDbContext<CatalogDbContext>("identitydb", configureDbContextOptions: options =>
+        builder.AddNpgsqlDbContext<CatalogDbContext>("catalogdb", configureDbContextOptions: options =>
         {
             options.UseOpenIddict();
         });
