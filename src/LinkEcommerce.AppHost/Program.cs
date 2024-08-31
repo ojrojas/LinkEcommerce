@@ -16,7 +16,7 @@ var identity = builder.AddProject<Projects.Identity>("identity-ecommerce")
  .WithExternalHttpEndpoints();
 
 var basket = builder.AddProject<Projects.Basket>("basket-ecommerce")
-.WithReference(catalogDb)
+.WithReference(redis)
  .WithExternalHttpEndpoints();
 
 var orders = builder.AddProject<Projects.Orders>("orders-ecommerce")

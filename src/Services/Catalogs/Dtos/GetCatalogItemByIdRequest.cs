@@ -1,6 +1,6 @@
 namespace LinkEcommerce.Services.Catalogs.Dtos;
 
-public record GetCatalogItemByIdRequest: BaseRequest
+public record GetCatalogItemByIdRequest(Guid Id) : BaseRequest
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Id;
 }

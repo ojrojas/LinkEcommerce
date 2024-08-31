@@ -17,8 +17,16 @@ builder.AddDefaultOpenApi(withApiVersioning);
 
 var app = builder.Build();
 
-var catalogs = app.NewVersionedApi();
+#if DEBUG
+var scope = app.Services.CreateScope();
+var service = scope.ServiceProvider;
 
+var context = service.GetRequiredService<CatalogDbContext>();
+ArgumentNullException.ThrowIfNull(context);
+context.Database.EnsureCreated();
+#endif
+
+var catalogs = app.NewVersionedApi();
 
 app.MapDefaultEndpoints();
 

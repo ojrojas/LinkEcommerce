@@ -18,7 +18,6 @@ internal static class Extensions
    
         services.AddHttpContextAccessor();
         services.AddScoped(typeof(ILoggerApplicationService<>), typeof(LoggerApplicationService<>));
-        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<ICatalogService, CatalogService>();
     }
 

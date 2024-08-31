@@ -6,8 +6,8 @@ public class CatalogDbContext : DbContext
      public CatalogDbContext(DbContextOptions<CatalogDbContext> options) : base(options) { }
 
     public DbSet<CatalogBrand> Brands { get; set; }
-    public DbSet<CatalogItem> CatalogItems { get; set; }
     public DbSet<CatalogType> CatalogTypes { get; set; }
+    public DbSet<CatalogItem> CatalogItems { get; set; }
 
     /// <summary>
     /// On model creating database, and specific change model

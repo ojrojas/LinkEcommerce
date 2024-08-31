@@ -1,6 +1,6 @@
 namespace LinkEcommerce.Services.Catalogs.Models;
 
-public class CatalogItem : BaseEntity, IAggregateRoot
+public class CatalogItem : BaseEntity
 {
     public string Name { get; set; }
     public string Description { get; set; }

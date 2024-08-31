@@ -1,6 +1,6 @@
 namespace LinkEcommerce.Services.Identity.Models;
 
-public class Card : BaseEntity, IAggregateRoot
+public class Card : BaseEntity
 {
 	public required string Number { get; set; }
 	public DateTime ExpirationDate { get; set; }

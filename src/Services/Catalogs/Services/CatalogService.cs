@@ -3,11 +3,11 @@ namespace LinkEcommerce.Services.Catalogs.Services;
 public class CatalogService : ICatalogService
 {
     private readonly ILoggerApplicationService<CatalogService> logger;
-    private readonly IGenericRepository<CatalogItem> context;
+    private readonly CatalogDbContext context;
 
     public CatalogService(
         ILoggerApplicationService<CatalogService> logger,
-        IGenericRepository<CatalogItem> context
+        CatalogDbContext context
 )
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -18,7 +18,9 @@ public class CatalogService : ICatalogService
     {
         CreateCatalogItemResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Create catalog item request");
-        response.CatalogItemCreated = await context.CreateAsync(request.CatalogItem, cancellationToken);
+        var entity = await context.CatalogItems.AddAsync(request.CatalogItem, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
+        response.CatalogItemCreated = entity.Entity;
         logger.LogInformation(response, "Create catalog item successful");
         return response;
     }
@@ -27,7 +29,9 @@ public class CatalogService : ICatalogService
     {
         UpdateCatalogItemResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Update catalog item request");
-        response.CatalogItemUpdated = await context.UpdateAsync(request.CatalogItem, cancellationToken);
+        var entity = context.CatalogItems.Update(request.CatalogItem);
+        await context.SaveChangesAsync(cancellationToken);
+        response.CatalogItemUpdated = entity.Entity;
         logger.LogInformation(response, "Update catalog item successful");
         return response;
     }
@@ -36,8 +40,9 @@ public class CatalogService : ICatalogService
     {
         DeleteCatalogItemResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Delete catalog item request");
-        var catalogItemToDelete = await context.GetByIdAsync(request.Id, cancellationToken);
-        response.IsDeleted = await context.DeleteAsync(catalogItemToDelete, cancellationToken) != null;
+        var catalogItemToDelete = await context.CatalogItems.FirstOrDefaultAsync(x => x.Equals(request.Id), cancellationToken);
+        ArgumentNullException.ThrowIfNull(catalogItemToDelete);
+        response.IsDeleted = context.CatalogItems.Remove(catalogItemToDelete) != null;
         logger.LogInformation(response, "Delete catalog item successful");
         return response;
     }
@@ -46,10 +51,13 @@ public class CatalogService : ICatalogService
     {
         PaginationResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "get catalog items by paginated request");
-        var count = await context.CountAsync(cancellationToken);
-        var spec = new CatalogItemSpecification(request.pageSize, request.PageIndex);
-        var items = await context.ListAsync(spec, cancellationToken);
-        response.PaginatedItems = new(request.PageIndex, request.pageSize, count, items);
+        var count = await context.CatalogItems.CountAsync(cancellationToken);
+
+        var items = context.CatalogItems.OrderBy(x => x.Name)
+        .Skip(request.PageSize * request.PageIndex)
+        .Take(request.PageSize);
+
+        response.PaginatedItems = new(request.PageIndex, request.PageSize, count, items);
         if (response.PaginatedItems.Count > 0)
             logger.LogInformation(response, $"Response get catalog items by paginate count: {response.PaginatedItems.Count}");
         else
@@ -62,7 +70,8 @@ public class CatalogService : ICatalogService
     {
         GetCatalogItemByIdResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by id request");
-        response.CatalogItem = await context.GetByIdAsync(request.Id, cancellationToken);
+        logger.LogInformation("value::::", request.Id.ToString());
+        response.CatalogItem = await context.CatalogItems.FirstOrDefaultAsync(x => x.Id.Equals(request.Id), cancellationToken);
         logger.LogInformation(response, "Get catalogitem by id successful");
 
         return response;
@@ -72,10 +81,14 @@ public class CatalogService : ICatalogService
     {
         GetCatalogItemsByBrandIdResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by brand_id request");
-        CatalogItemSpecification spec = new(request.pageSize, request.PageIndex, request.BrandId);
-        var count = await context.CountAsync(cancellationToken);
-        var items = await context.ListAsync(spec, cancellationToken);
-        response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.pageSize, count, items);
+        CatalogItemSpecification spec = new(request.PageSize, request.PageIndex, request.BrandId);
+
+        var items = context.CatalogItems.Where(x => x.CatalogBrandId.Equals(request.BrandId));
+        var count = await items.CountAsync();
+
+        var itemsOnPage = items.Skip(request.PageSize * request.PageIndex).Take(request.PageSize);
+
+        response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.PageSize, count, itemsOnPage);
         logger.LogInformation(response, "Get catalogitem by brand_id successful");
 
         return response;
@@ -85,10 +98,14 @@ public class CatalogService : ICatalogService
     {
         GetItemsByBrandAndTypeIdResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by brand_id and type_id request");
-        CatalogItemSpecification spec = new(request.pageSize, request.PageIndex, request.BrandId, request.TypeId);
-        var count = await context.CountAsync(cancellationToken);
-        var items = await context.ListAsync(spec, cancellationToken);
-        response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.pageSize, count, items);
+        CatalogItemSpecification spec = new(request.PageSize, request.PageIndex, request.BrandId, request.TypeId);
+
+        var items = context.CatalogItems.Where(x => x.CatalogBrandId.Equals(request.BrandId) && x.CatalogTypeId.Equals(request.TypeId));
+        var count = await items.CountAsync();
+
+        var itemsOnPage = items.Skip(request.PageSize * request.PageIndex).Take(request.PageSize);
+
+        response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.PageSize, count, itemsOnPage);
         logger.LogInformation(response, "Get catalogitem by brand_id and type_id successful");
 
         return response;
@@ -98,10 +115,15 @@ public class CatalogService : ICatalogService
     {
         GetCatalogItemsByNamesResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by names request");
-        CatalogItemSpecification spec = new(request.Names, request.pageSize, request.PageIndex);
-        var count = await context.CountAsync(cancellationToken);
-        var items = await context.ListAsync(spec, cancellationToken);
-        response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.pageSize, count, items);
+        CatalogItemSpecification spec = new(request.Names, request.PageSize, request.PageIndex);
+
+        var items = context.CatalogItems.Where(x => x.Name.StartsWith(request.Names));
+        var count = await items.CountAsync();
+
+        var itemsOnPage = await  items.Skip(request.PageSize * request.PageIndex)
+        .Take(request.PageSize).ToListAsync();
+
+        response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.PageSize, count, itemsOnPage);
         logger.LogInformation(response, "Get catalogitem by names successful");
 
         return response;

@@ -1,6 +1,5 @@
 global using System.Text.Json;
 global using Microsoft.EntityFrameworkCore;
-global using LinkEcommerce.ServiceDefaults.Loggers;
 
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
