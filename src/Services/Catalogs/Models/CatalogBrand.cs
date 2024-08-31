@@ -2,5 +2,5 @@ namespace LinkEcommerce.Services.Catalogs.Models;
 
 public class CatalogBrand : BaseEntity, IAggregateRoot
 {
-    public required string Name { get; set; }
+    public string Name { get; set; }
 }

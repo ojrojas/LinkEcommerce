@@ -7,7 +7,7 @@ public class CatalogDbContext : DbContext
 
     public DbSet<CatalogBrand> Brands { get; set; }
     public DbSet<CatalogItem> CatalogItems { get; set; }
-    public DbSet<CatalogType> IdentificationTypes { get; set; }
+    public DbSet<CatalogType> CatalogTypes { get; set; }
 
     /// <summary>
     /// On model creating database, and specific change model
@@ -17,7 +17,6 @@ public class CatalogDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // modelBuilder.Entity<UserApplication>().HasIndex(u => new { u.User.TypeIdentificationId, u.User.Identification }).IsUnique();
         modelBuilder.ApplyConfigurationsFromAssembly(assembly: Assembly.GetExecutingAssembly());
     }
 }

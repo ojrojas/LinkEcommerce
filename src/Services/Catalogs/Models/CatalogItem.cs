@@ -2,7 +2,7 @@ namespace LinkEcommerce.Services.Catalogs.Models;
 
 public class CatalogItem : BaseEntity, IAggregateRoot
 {
-    public required string Name { get; set; }
+    public string Name { get; set; }
     public string Description { get; set; }
     public decimal Price { get; set; }
     public CatalogBrand CatalogBrand { get; set; }
@@ -18,7 +18,7 @@ public class CatalogItem : BaseEntity, IAggregateRoot
     /// </summary>
     /// <param name="quantity">Quantity items to add</param>
     /// <returns>Quantities added</returns>
-    public (int, string) AddItems(int quantity)
+    public ReturnQuantity AddItems(int quantity)
     {
         int stock = this.AvailableQuantity;
         if ((this.AvailableQuantity + quantity) > this.AvailableQuantity)
@@ -26,7 +26,7 @@ public class CatalogItem : BaseEntity, IAggregateRoot
         else
             this.AvailableQuantity += quantity;
 
-        return (this.AvailableQuantity - stock, "Quantity items added");
+        return new(this.AvailableQuantity - stock, "Quantity items added");
     }
 
     /// <summary>
@@ -34,16 +34,22 @@ public class CatalogItem : BaseEntity, IAggregateRoot
     /// </summary>
     /// <param name="quantity">Quantities Removed</param>
     /// <returns></returns>
-    public (int, string) RemoveItems(int quantity)
+    public ReturnQuantity RemoveItems(int quantity)
     {
-        if(AvailableQuantity.Equals(default))
+        if (AvailableQuantity.Equals(default))
             throw new CatalogItemNotAvailableException($"stock items name: {Name}, is all sold out");
-        
-        if(quantity <= 0)
+
+        if (quantity <= 0)
             throw new CatalogItemNotAvailableException($"Item should be greater than zero units");
-         
+
         var removed = this.AvailableQuantity -= quantity;
 
-        return (removed, "Quantity items removed");
+        return new(removed, "Quantity items removed");
     }
+}
+
+public class ReturnQuantity(int quantity, string description)
+{
+    public int Quantity { get; set; } = quantity;
+    public string Description { get; set; } = description;
 }

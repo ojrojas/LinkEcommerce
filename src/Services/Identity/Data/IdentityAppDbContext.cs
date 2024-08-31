@@ -16,7 +16,6 @@ public class IdentityAppDbContext : IdentityDbContext<UserApplication, UserType,
     {
         base.OnModelCreating(modelBuilder);
 
-        // modelBuilder.Entity<UserApplication>().HasIndex(u => new { u.User.TypeIdentificationId, u.User.Identification }).IsUnique();
         modelBuilder.ApplyConfigurationsFromAssembly(assembly: Assembly.GetExecutingAssembly());
     }
 }

@@ -5,18 +5,27 @@ Log.Logger = LoggerPrinter.CreateSerilogLogger("api", "catalog");
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-builder.AddApplicationServices();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.AddServiceDefaults();
+builder.AddApplicationServices();
+builder.Services.AddProblemDetails();
+
+var withApiVersioning = builder.Services.AddApiVersioning();
+
+builder.AddDefaultOpenApi(withApiVersioning);
 
 var app = builder.Build();
 
+var catalogs = app.NewVersionedApi();
+
+
+app.MapDefaultEndpoints();
+
 app.UseHttpsRedirection();
 
-app.MapGet("/", () => "Hola Mundo");
-
-// app.MapCatalogEndpointsV1();
-// app.UseDefaultOpenApi();
+catalogs.MapCatalogEndpointsV1();
+app.UseDefaultOpenApi();
 
 
 app.Run();

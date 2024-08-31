@@ -10,8 +10,8 @@ public class CatalogService : ICatalogService
         IGenericRepository<CatalogItem> context
 )
     {
-        this.logger = logger;
-        this.context = context;
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
     public async ValueTask<CreateCatalogItemResponse> CreateCatalogItemAsync(CreateCatalogItemRequest request, CancellationToken cancellationToken)

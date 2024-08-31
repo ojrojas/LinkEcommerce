@@ -14,9 +14,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, IAggr
     /// <param name="specificationEvaluator">specification evaluator</param>
     public GenericRepository(ILoggerApplicationService<GenericRepository<T>> logger, DbContext context, ISpecificationEvaluator specificationEvaluator)
     {
-        _logger = logger;
-        _context = context;
-        _specificationEvaluator = specificationEvaluator;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _context = context ?? throw new ArgumentNullException(nameof(context));;
+        _specificationEvaluator = specificationEvaluator ?? throw new ArgumentNullException(nameof(specificationEvaluator));;
     }
 
     /// <summary>

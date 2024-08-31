@@ -50,7 +50,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 
-app.MapAuthorizeEndpointsV1();
+identity.MapAuthorizeEndpointsV1();
 
 identity.MapEndpointUserApplicationV1().RequireAuthorization();
 

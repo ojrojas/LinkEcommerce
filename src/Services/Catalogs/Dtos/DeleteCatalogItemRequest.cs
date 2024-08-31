@@ -1,6 +1,6 @@
 namespace LinkEcommerce.Services.Catalogs.Dtos;
 
-public record DeleteCatalogItemRequest : BaseRequest
+public record DeleteCatalogItemRequest(Guid id) : BaseRequest
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = id;
 }
