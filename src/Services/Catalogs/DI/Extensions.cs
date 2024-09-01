@@ -6,7 +6,7 @@ internal static class Extensions
     {
         var configuration = builder.Configuration;
         var services = builder.Services;
-       
+
         builder.AddNpgsqlDbContext<CatalogDbContext>("catalogdb");
 
         builder.EnrichNpgsqlDbContext<CatalogDbContext>();
@@ -15,15 +15,9 @@ internal static class Extensions
         services.AddAuthorization();
 
         IdentityModelEventSource.ShowPII = true;
-   
+
         services.AddHttpContextAccessor();
         services.AddScoped(typeof(ILoggerApplicationService<>), typeof(LoggerApplicationService<>));
         services.AddScoped<ICatalogService, CatalogService>();
-    }
-
-    public static bool IsNativeClient(this HttpContext request)
-    {
-        return !request.Request.RouteValues.ToString().StartsWith("https", StringComparison.Ordinal) &&
-        !request.Request.RouteValues.ToString().StartsWith("http", StringComparison.Ordinal);
     }
 }

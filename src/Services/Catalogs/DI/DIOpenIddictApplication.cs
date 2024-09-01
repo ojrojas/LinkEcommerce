@@ -2,13 +2,17 @@ namespace LinkEcommerce.Services.Catalogs.DI;
 
 public static class DIOpenIddictApplication
 {
-    public static IServiceCollection AddDIOpenIddictApplication(this IServiceCollection services)
+    public static IServiceCollection AddDIOpenIddictApplication(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddOpenIddict()
             .AddValidation(config =>
             {
-                config.SetIssuer("http://docker.for.mac.localhost:5005/");
-                config.AddAudiences("resource_catalogs");
+                config.SetIssuer(configuration["IdentityApiClient"]);
+                config.AddAudiences("resource_server_catalog");
+
+                config.UseIntrospection()
+                .SetClientId("catalog_api")
+                .SetClientSecret("catalog_api_secret");
 
                 config.AddEncryptionKey(
                     new SymmetricSecurityKey(

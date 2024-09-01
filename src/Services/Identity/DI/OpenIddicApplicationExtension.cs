@@ -23,8 +23,8 @@ public static class OpenIddicApplicationExtension
 
             config.SetTokenEndpointUris("connect/token");
             config.SetAuthorizationEndpointUris("connect/authorize");
-            config.SetIntrospectionEndpointUris("connect/introspect");
-            // config.SetLogoutEndpointUris("connect/logout");
+            config.SetLogoutEndpointUris("connect/logout");
+            config.SetLogoutEndpointUris("connect/introspect");
 
 #if DEBUG
             config.AddDevelopmentEncryptionCertificate()

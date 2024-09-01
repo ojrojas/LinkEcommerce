@@ -9,7 +9,7 @@ public class LoginModel : PageModel
     private readonly IUserApplicationServices _services;
 
     public LoginModel(
-        IUserApplicationServices services, 
+        IUserApplicationServices services,
         ILoggerApplicationService<LoginModel> logger,
         SignInManager<UserApplication> signInManager)
     {
@@ -43,12 +43,12 @@ public class LoginModel : PageModel
         // var result = await _signInManager.PasswordSignInAsync(Login.UserName, Login.Password, true, false);
         var result = await _services.LoginAsync(Login);
 
-         //_logger.LogInformation($"Result login : {result.Succeeded}");
+        //_logger.LogInformation($"Result login : {result.Succeeded}");
 
         if (result != null)
         {
             _logger.LogInformation($"Login successful returning to: {Login.ReturnUrl}");
-          
+
             if (HttpContext.IsNativeClient())
             {
                 _logger.LogInformation("Is Native Client");

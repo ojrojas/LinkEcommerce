@@ -103,7 +103,7 @@ public class SeedIdentity(
         {
             await applicationManager.CreateAsync(new OpenIddictApplicationDescriptor
             {
-                ApplicationType = ApplicationTypes.Native,
+                ApplicationType = ApplicationTypes.Web,
                 ClientId = "identity_swagger",
                 ClientType = ClientTypes.Public,
                 DisplayName = "Identity Client Swagger",
@@ -111,7 +111,6 @@ public class SeedIdentity(
                 Permissions = {
                         Permissions.Endpoints.Token,
                         Permissions.Endpoints.Logout,
-                        Permissions.GrantTypes.AuthorizationCode,
                         Permissions.GrantTypes.ClientCredentials,
                         Permissions.GrantTypes.Implicit,
                         Permissions.GrantTypes.Password,
@@ -123,8 +122,70 @@ public class SeedIdentity(
                         Permissions.Scopes.Profile,
                         Permissions.Scopes.Roles,
                         Permissions.Prefixes.Scope + "identity_api",
+                        Permissions.Prefixes.Scope + "catalog_api"
                     },
-                PostLogoutRedirectUris = { new Uri($"{configuration["IdentityApiClient"]}/swagger/") },
+                PostLogoutRedirectUris = { new Uri($"{configuration["IdentityApiClient"]}/connect/logout"), new Uri($"{configuration["IdentityApiClient"]}/swagger/") },
+                Requirements = { Requirements.Features.ProofKeyForCodeExchange }
+            });
+        }
+
+        if (await applicationManager.FindByClientIdAsync("catalog_swagger") is null)
+        {
+            await applicationManager.CreateAsync(new OpenIddictApplicationDescriptor
+            {
+                ApplicationType = ApplicationTypes.Web,
+                ClientId = "catalog_swagger",
+                ClientType = ClientTypes.Public,
+                DisplayName = "Catalog Client Swagger",
+                RedirectUris = { new Uri($"{configuration["CatalogApiClient"]}/swagger/oauth2-redirect.html") },
+                Permissions = {
+                        Permissions.Endpoints.Token,
+                        Permissions.Endpoints.Logout,
+                        Permissions.Endpoints.Introspection,
+                        Permissions.GrantTypes.ClientCredentials,
+                        Permissions.GrantTypes.Implicit,
+                        Permissions.GrantTypes.Password,
+                        Permissions.Endpoints.Authorization,
+                        Permissions.ResponseTypes.Token,
+                        Permissions.ResponseTypes.CodeToken,
+                        Permissions.ResponseTypes.Code,
+                        Permissions.Scopes.Email,
+                        Permissions.Scopes.Profile,
+                        Permissions.Scopes.Roles,
+                        Permissions.Prefixes.Scope + "catalog_api"
+                    },
+                PostLogoutRedirectUris = { new Uri($"{configuration["IdentityApiClient"]}/connect/logout"), new Uri($"{configuration["CatalogApiClient"]}/swagger/") },
+                Requirements = { Requirements.Features.ProofKeyForCodeExchange }
+            });
+        }
+
+           if (await applicationManager.FindByClientIdAsync("catalog_api") is null)
+        {
+            await applicationManager.CreateAsync(new OpenIddictApplicationDescriptor
+            {
+                ApplicationType = ApplicationTypes.Web,
+                ClientId = "catalog_api",
+                ClientSecret = "catalog_api_secret",
+                ClientType = ClientTypes.Confidential,
+                DisplayName = "Catalog Client Api",
+                RedirectUris = { new Uri($"{configuration["CatalogApiClient"]}/swagger/oauth2-redirect.html") },
+                Permissions = {
+                        Permissions.Endpoints.Token,
+                        Permissions.Endpoints.Logout,
+                        Permissions.Endpoints.Introspection,
+                        Permissions.GrantTypes.ClientCredentials,
+                        Permissions.GrantTypes.Implicit,
+                        Permissions.GrantTypes.Password,
+                        Permissions.Endpoints.Authorization,
+                        Permissions.ResponseTypes.Token,
+                        Permissions.ResponseTypes.CodeToken,
+                        Permissions.ResponseTypes.Code,
+                        Permissions.Scopes.Email,
+                        Permissions.Scopes.Profile,
+                        Permissions.Scopes.Roles,
+                        Permissions.Prefixes.Scope + "catalog_api"
+                    },
+                PostLogoutRedirectUris = { new Uri($"{configuration["IdentityApiClient"]}/connect/logout"), new Uri($"{configuration["CatalogApiClient"]}/swagger/") },
                 Requirements = { Requirements.Features.ProofKeyForCodeExchange }
             });
         }

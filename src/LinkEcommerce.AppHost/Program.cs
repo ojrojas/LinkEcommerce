@@ -25,6 +25,8 @@ var orders = builder.AddProject<Projects.Orders>("orders-ecommerce")
 
 var catalogs = builder.AddProject<Projects.Catalogs>("catalogs-ecommerce")
 .WithReference(catalogDb)
+.WithEnvironment("IdentityApiClient", identity.GetEndpoint("http"))
+.WithEnvironment("Identity__Url", identity.GetEndpoint("http"))
 .WithExternalHttpEndpoints();
 
 var payments = builder.AddProject<Projects.Payments>("payments-ecommerce");

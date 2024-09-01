@@ -120,7 +120,7 @@ public class CatalogService : ICatalogService
         var items = context.CatalogItems.Where(x => x.Name.StartsWith(request.Names));
         var count = await items.CountAsync();
 
-        var itemsOnPage = await  items.Skip(request.PageSize * request.PageIndex)
+        var itemsOnPage = await items.Skip(request.PageSize * request.PageIndex)
         .Take(request.PageSize).ToListAsync();
 
         response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.PageSize, count, itemsOnPage);

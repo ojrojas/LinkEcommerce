@@ -31,6 +31,8 @@ internal static class Extensions
             options.UseInMemoryStore();
         });
 
+        builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
         services.AddOpenIddictApplication(configuration);
 
         services.AddHttpContextAccessor();

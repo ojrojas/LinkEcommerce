@@ -3,7 +3,7 @@ public static class AuthorizeEndpoints
 {
     public static RouteGroupBuilder MapAuthorizeEndpointsV1(this IEndpointRouteBuilder routeBuilder)
     {
-        var api = routeBuilder.MapGroup(string.Empty).HasApiVersion(1.0);
+        var api = routeBuilder.MapGroup(string.Empty);
 
         api.MapMethods("/connect/authorize", [HttpMethods.Get, HttpMethods.Post], AuthorizeApp);
         api.MapPost("/connect/token", GetToken);
