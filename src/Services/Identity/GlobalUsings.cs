@@ -31,6 +31,8 @@ global using LinkEcommerce.Services.Identity.Services;
 global using Npgsql.Replication;
 global using Quartz;
 global using System.Web;
+global using OpenIddict.Client;
+
 
 global using Microsoft.AspNetCore.Http.HttpResults;
 global using Microsoft.AspNetCore.Mvc.RazorPages;

@@ -19,6 +19,7 @@ public static class AuthenticationExtensions
         if (!identitySection.Exists())
         {
             // No identity section, so no authentication
+            Console.WriteLine("No Identity Section");
             return services;
         }
 

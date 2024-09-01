@@ -5,28 +5,15 @@ public class UserApplicationServices : IUserApplicationServices
     private readonly UserManager<UserApplication> _userManager;
     private readonly ILoggerApplicationService<UserApplicationServices> _logger;
     private readonly SignInManager<UserApplication> _signInManager;
-    // private readonly RoleManager<UserType> _roleManager;
-    // private readonly IOpenIddictApplicationManager _applicationManager;
-    // private readonly IOpenIddictAuthorizationManager _authorizationManager;
-    // private readonly IOpenIddictScopeManager _scopeManager;
 
     public UserApplicationServices(
         UserManager<UserApplication> userManager,
         ILoggerApplicationService<UserApplicationServices> logger,
-        SignInManager<UserApplication> signInManager
-        // RoleManager<UserType> roleManager,
-        // IOpenIddictApplicationManager applicationManager,
-        // IOpenIddictAuthorizationManager authorizationManager,
-        // IOpenIddictScopeManager scopeManager
-        )
+        SignInManager<UserApplication> signInManager)
     {
         _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         _logger = logger ?? throw new ArgumentNullException(nameof(userManager));
         _signInManager = signInManager ?? throw new ArgumentNullException(nameof(userManager));
-        // _roleManager = roleManager ?? throw new ArgumentNullException(nameof(roleManager));
-        // _applicationManager = applicationManager ?? throw new ArgumentNullException(nameof(userManager));
-        // _authorizationManager = authorizationManager ?? throw new ArgumentNullException(nameof(userManager));
-        // _scopeManager = scopeManager ?? throw new ArgumentNullException(nameof(userManager));
     }
 
     public async ValueTask<CreateUserResponse> CreateUserAsync(CreateUserRequest request,
@@ -45,7 +32,7 @@ public class UserApplicationServices : IUserApplicationServices
         else
             _logger.LogError(response, "Error to created user application");
 
-        if(cancellationToken.IsCancellationRequested && !identityResult.Succeeded)
+        if (cancellationToken.IsCancellationRequested && !identityResult.Succeeded)
         {
             _logger.LogWarning("User application request is cancelled");
             await _userManager.DeleteAsync(RemapedUserApplication(response.UserCreated));
@@ -72,7 +59,7 @@ public class UserApplicationServices : IUserApplicationServices
         else
             _logger.LogError(response, "Error to created user application");
 
-         if(cancellationToken.IsCancellationRequested && !identityResult.Succeeded)
+        if (cancellationToken.IsCancellationRequested && !identityResult.Succeeded)
         {
             _logger.LogWarning("User application request is cancelled");
             await _userManager.UpdateAsync(currentUserApplication);
@@ -98,7 +85,7 @@ public class UserApplicationServices : IUserApplicationServices
             _logger.LogError(response, "Error to delete user application");
         }
 
-        if(cancellationToken.IsCancellationRequested && !identityResult.Succeeded)
+        if (cancellationToken.IsCancellationRequested && !identityResult.Succeeded)
         {
             _logger.LogWarning("User application request is cancelled");
             await _userManager.UpdateAsync(userApplication);
@@ -138,7 +125,7 @@ public class UserApplicationServices : IUserApplicationServices
         }
 
         var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, false);
-        
+
         if (!result.Succeeded)
         {
             var properties = new AuthenticationProperties(new Dictionary<string, string>
@@ -167,13 +154,11 @@ public class UserApplicationServices : IUserApplicationServices
         // Set the list of scopes granted to the client application.
         identity.SetScopes(new[]
         {
-                Scopes.OpenId,
-                Scopes.Email,
-                Scopes.Profile,
-                Scopes.Roles
-        }
-        // .Intersect(request)
-        );
+            Scopes.OpenId,
+            Scopes.Email,
+            Scopes.Profile,
+            Scopes.Roles
+        });
 
         identity.SetDestinations(GetDestination.GetDestinations);
         if (result.Succeeded)
@@ -260,7 +245,7 @@ public class UserApplicationServices : IUserApplicationServices
         GetAllUsersResponse response = new(request.CorrelationId);
         _logger.LogInformation("Get all user application request");
         var usersApplications = await _userManager.GetUsersInRoleAsync("Admin");
-        response.Users = usersApplications.Select(x=> RemapedRegisterUserApplication(x));
+        response.Users = usersApplications.Select(x => RemapedRegisterUserApplication(x));
         _logger.LogInformation("Get user all users application in role");
         return response;
     }
@@ -309,5 +294,5 @@ public class UserApplicationServices : IUserApplicationServices
             Company = userApplication.Company,
             CompanyId = userApplication.CompanyId
         };
-    } 
+    }
 }

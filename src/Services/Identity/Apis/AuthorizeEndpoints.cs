@@ -68,7 +68,10 @@ public static class AuthorizeEndpoints
         identity.SetClaim(Claims.Name, await applicationManager.GetDisplayNameAsync(application));
 
         identity.SetScopes(request.GetScopes());
-        identity.SetResources(await scopeManager.ListResourcesAsync(identity.GetScopes()).ToListExtensionsAsync());
+        var resources = await scopeManager.ListResourcesAsync(identity.GetScopes()).ToListExtensionsAsync();
+        foreach(var resource in resources)
+            Console.WriteLine($"Resource found {resource}");
+        identity.SetResources(resources);
         identity.SetDestinations(GetDestination.GetDestinations);
 
         return Results.SignIn(new ClaimsPrincipal(identity), new(), OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);

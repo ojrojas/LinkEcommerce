@@ -24,6 +24,7 @@ internal static class Extensions
            .AddDefaultTokenProviders();
 
         builder.AddDefaultAuthentication();
+        
         services.AddQuartz(options =>
         {
             options.UseMicrosoftDependencyInjectionJobFactory();

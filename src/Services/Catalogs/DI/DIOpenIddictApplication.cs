@@ -7,12 +7,13 @@ public static class DIOpenIddictApplication
         services.AddOpenIddict()
             .AddValidation(config =>
             {
-                config.SetIssuer(configuration["IdentityApiClient"]);
-                config.AddAudiences("resource_server_catalog");
+                config.SetIssuer($"{configuration["IdentityApiClient"]}/");
+                Console.WriteLine($"{configuration["IdentityApiClient"]}/");
+                config.AddAudiences("catalog_api");
 
                 config.UseIntrospection()
                 .SetClientId("catalog_api")
-                .SetClientSecret("catalog_api_secret");
+                .SetClientSecret("a2344152-e928-49e7-bb3c-ee54acc96c8c");
 
                 config.AddEncryptionKey(
                     new SymmetricSecurityKey(

@@ -16,23 +16,24 @@ public static class OpenIddicApplicationExtension
         {
             config.AllowPasswordFlow();
             config.AllowClientCredentialsFlow();
+            config.AllowAuthorizationCodeFlow();
             config.AllowImplicitFlow();
             config.AllowRefreshTokenFlow();
 
             config.RequireProofKeyForCodeExchange();
 
-            config.SetTokenEndpointUris("connect/token");
-            config.SetAuthorizationEndpointUris("connect/authorize");
-            config.SetLogoutEndpointUris("connect/logout");
-            config.SetLogoutEndpointUris("connect/introspect");
+            config.SetAuthorizationEndpointUris("/connect/authorize");
+            config.SetIntrospectionEndpointUris("/connect/introspect");
+            config.SetTokenEndpointUris("/connect/token");
+            config.SetLogoutEndpointUris("/connect/logout");
 
-#if DEBUG
-            config.AddDevelopmentEncryptionCertificate()
-            .AddDevelopmentSigningCertificate();
-#else
-            config.AddEphemeralEncryptionKey()
-            .AddEphemeralSigningKey();
-#endif
+
+            config.AddEncryptionKey(
+                    new SymmetricSecurityKey(
+                        Convert.FromBase64String("U3BvY2lmeTNkOWMyNzhiLTgyZDEtNGI4OC05NDRjLTg=")));
+
+             config.AddDevelopmentSigningCertificate();
+
             config.UseAspNetCore()
               .DisableTransportSecurityRequirement()
               .EnableAuthorizationEndpointPassthrough()

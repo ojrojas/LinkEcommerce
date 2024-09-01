@@ -116,13 +116,13 @@ public class SeedIdentity(
                         Permissions.GrantTypes.Password,
                         Permissions.Endpoints.Authorization,
                         Permissions.ResponseTypes.Token,
-                        Permissions.ResponseTypes.CodeToken,
                         Permissions.ResponseTypes.Code,
                         Permissions.Scopes.Email,
                         Permissions.Scopes.Profile,
                         Permissions.Scopes.Roles,
+                        Permissions.Scopes.Roles,
                         Permissions.Prefixes.Scope + "identity_api",
-                        Permissions.Prefixes.Scope + "catalog_api"
+                        // Permissions.Prefixes.Scope + "catalog_api"
                     },
                 PostLogoutRedirectUris = { new Uri($"{configuration["IdentityApiClient"]}/connect/logout"), new Uri($"{configuration["IdentityApiClient"]}/swagger/") },
                 Requirements = { Requirements.Features.ProofKeyForCodeExchange }
@@ -141,84 +141,64 @@ public class SeedIdentity(
                 Permissions = {
                         Permissions.Endpoints.Token,
                         Permissions.Endpoints.Logout,
-                        Permissions.Endpoints.Introspection,
                         Permissions.GrantTypes.ClientCredentials,
                         Permissions.GrantTypes.Implicit,
                         Permissions.GrantTypes.Password,
                         Permissions.Endpoints.Authorization,
                         Permissions.ResponseTypes.Token,
-                        Permissions.ResponseTypes.CodeToken,
                         Permissions.ResponseTypes.Code,
                         Permissions.Scopes.Email,
                         Permissions.Scopes.Profile,
                         Permissions.Scopes.Roles,
-                        Permissions.Prefixes.Scope + "catalog_api"
+                        Permissions.Prefixes.Scope + "catalog_scope"
                     },
                 PostLogoutRedirectUris = { new Uri($"{configuration["IdentityApiClient"]}/connect/logout"), new Uri($"{configuration["CatalogApiClient"]}/swagger/") },
                 Requirements = { Requirements.Features.ProofKeyForCodeExchange }
             });
         }
 
-           if (await applicationManager.FindByClientIdAsync("catalog_api") is null)
+        if (await applicationManager.FindByClientIdAsync("catalog_api") is null)
         {
             await applicationManager.CreateAsync(new OpenIddictApplicationDescriptor
             {
-                ApplicationType = ApplicationTypes.Web,
                 ClientId = "catalog_api",
-                ClientSecret = "catalog_api_secret",
-                ClientType = ClientTypes.Confidential,
+                ClientSecret = "a2344152-e928-49e7-bb3c-ee54acc96c8c",
                 DisplayName = "Catalog Client Api",
-                RedirectUris = { new Uri($"{configuration["CatalogApiClient"]}/swagger/oauth2-redirect.html") },
                 Permissions = {
-                        Permissions.Endpoints.Token,
-                        Permissions.Endpoints.Logout,
                         Permissions.Endpoints.Introspection,
-                        Permissions.GrantTypes.ClientCredentials,
-                        Permissions.GrantTypes.Implicit,
-                        Permissions.GrantTypes.Password,
-                        Permissions.Endpoints.Authorization,
-                        Permissions.ResponseTypes.Token,
-                        Permissions.ResponseTypes.CodeToken,
-                        Permissions.ResponseTypes.Code,
-                        Permissions.Scopes.Email,
-                        Permissions.Scopes.Profile,
-                        Permissions.Scopes.Roles,
-                        Permissions.Prefixes.Scope + "catalog_api"
-                    },
-                PostLogoutRedirectUris = { new Uri($"{configuration["IdentityApiClient"]}/connect/logout"), new Uri($"{configuration["CatalogApiClient"]}/swagger/") },
-                Requirements = { Requirements.Features.ProofKeyForCodeExchange }
+                    }
             });
         }
 
-        if (await scopeManager.FindByNameAsync("basket_api") is null)
+        if (await scopeManager.FindByNameAsync("catalog_scope") is null)
         {
             await scopeManager.CreateAsync(new OpenIddictScopeDescriptor
             {
-                Name = "basket_api",
+                Name = "catalog_scope",
+                Resources =
+                {
+                    "catalog_api",
+                    "identity_scope"
+                }
+            });
+        }
+
+        if (await scopeManager.FindByNameAsync("basket_scope") is null)
+        {
+            await scopeManager.CreateAsync(new OpenIddictScopeDescriptor
+            {
+                Name = "basket_scope",
                 Resources =
                 {
                     "resource_server_basket"
                 }
             });
         }
-
-        if (await scopeManager.FindByNameAsync("catalog_api") is null)
+        if (await scopeManager.FindByNameAsync("order_scope") is null)
         {
             await scopeManager.CreateAsync(new OpenIddictScopeDescriptor
             {
-                Name = "catalog_api",
-                Resources =
-                {
-                    "resource_server_catalog"
-                }
-            });
-        }
-
-        if (await scopeManager.FindByNameAsync("order_api") is null)
-        {
-            await scopeManager.CreateAsync(new OpenIddictScopeDescriptor
-            {
-                Name = "order_api",
+                Name = "order_scope",
                 Resources =
                 {
                     "resource_server_order"
@@ -226,11 +206,11 @@ public class SeedIdentity(
             });
         }
 
-        if (await scopeManager.FindByNameAsync("identity_api") is null)
+        if (await scopeManager.FindByNameAsync("identity_scope") is null)
         {
             await scopeManager.CreateAsync(new OpenIddictScopeDescriptor
             {
-                Name = "identity_api",
+                Name = "identity_scope",
                 Resources =
                 {
                     "resource_server_identity"

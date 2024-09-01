@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
  Log.Logger = LoggerPrinter.CreateSerilogLogger("api", "identity");
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 // Add services to the container.
@@ -19,7 +20,12 @@ var withApiVersioning = builder.Services.AddApiVersioning();
 
 builder.AddDefaultOpenApi(withApiVersioning);
 
+builder.Services.AddCors();
+
 var app = builder.Build();
+
+app.UseCors(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
 
 #if DEBUG
 // Configure the HTTP request pipeline.
@@ -40,7 +46,9 @@ await initializer.CreateConfigurationOpenIddict();
 
 var identity = app.NewVersionedApi();
 
+app.MapDefaultControllerRoute();
 app.MapDefaultEndpoints();
+
 
 // app.UseHttpsRedirection();
 app.UseStaticFiles();
