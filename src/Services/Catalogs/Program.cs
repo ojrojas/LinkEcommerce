@@ -1,8 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
-Log.Logger = LoggerPrinter.CreateSerilogLogger("api", "catalog");
-
 var configuration = builder.Configuration;
+Log.Logger = LoggerPrinter.CreateSerilogLogger("api", "catalog", configuration);
+
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

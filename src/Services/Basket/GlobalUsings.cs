@@ -1,1 +1,13 @@
 global using LinkEcommerce.ServiceDefaults.Contexts;
+global using StackExchange.Redis;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
+global using LinkEcommerce.ServiceDefaults.Loggers;
+global using LinkEcommerce.Services.Basket.Models;
+global using System.Security.Claims;
+global using Grpc.Core;
+global using LinkEcommerce.Services.Basket.Extensions;
+global using System.Diagnostics.CodeAnalysis;
+global using Microsoft.AspNetCore.Authorization;
+global using LinkEcommerce.Services.Basket.Grpc;
+global using Serilog;

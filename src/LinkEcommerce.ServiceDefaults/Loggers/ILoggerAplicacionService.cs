@@ -17,4 +17,11 @@ public interface ILoggerApplicationService<T>
     void LogWarning(Guid correlationId, string message);
     void LogWarning(string correlationId, string message);
     void LogWarning(string message);
+
+    void LogDebug(BaseResponse response, string message);
+    void LogDebug(Guid correlationId, string message);
+    void LogDebug(string correlationId, string message);
+    void LogDebug(string message);
+
+    ILogger<T> FeaturesLogger();
 }

@@ -33,7 +33,11 @@ public static partial class CommonsExtensions
     {
         // Default health checks assume the event bus and self health checks
         builder.AddDefaultHealthChecks();
-
+        builder.AddSeqEndpoint("seq");
+        builder.Services.AddSerilog();
+        builder.Services.AddLogging(options => {
+            options.AddSeq();
+        });
         builder.ConfigureOpenTelemetry();
 
         return builder;

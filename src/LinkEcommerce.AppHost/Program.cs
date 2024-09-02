@@ -7,24 +7,35 @@ var postgres = builder.AddPostgres("postgres")
 .WithImageTag("latest")
 .WithPgAdmin();
 
+var seq = builder.AddSeq("seq")
+                 .ExcludeFromManifest();
+
 var catalogDb = postgres.AddDatabase("catalogdb");
 var identityDb = postgres.AddDatabase("identitydb");
 var orderDb = postgres.AddDatabase("orderingdb");
 
 var identity = builder.AddProject<Projects.Identity>("identity-ecommerce")
 .WithReference(identityDb)
- .WithExternalHttpEndpoints();
+.WithReference(seq)
+.WithEnvironment("SeqEndpoint", seq.GetEndpoint("http"))
+.WithExternalHttpEndpoints();
 
 var basket = builder.AddProject<Projects.Basket>("basket-ecommerce")
 .WithReference(redis)
- .WithExternalHttpEndpoints();
+.WithReference(seq)
+.WithEnvironment("SeqEndpoint", seq.GetEndpoint("http"))
+.WithExternalHttpEndpoints();
 
 var orders = builder.AddProject<Projects.Orders>("orders-ecommerce")
 .WithReference(orderDb)
- .WithExternalHttpEndpoints();
+.WithReference(seq) 
+.WithEnvironment("SeqEndpoint", seq.GetEndpoint("http"))
+.WithExternalHttpEndpoints();
 
 var catalogs = builder.AddProject<Projects.Catalogs>("catalogs-ecommerce")
 .WithReference(catalogDb)
+.WithReference(seq)
+.WithEnvironment("SeqEndpoint", seq.GetEndpoint("http"))
 .WithEnvironment("IdentityApiClient", identity.GetEndpoint("http"))
 .WithEnvironment("Identity__Url", identity.GetEndpoint("http"))
 .WithExternalHttpEndpoints();

@@ -1,6 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
- Log.Logger = LoggerPrinter.CreateSerilogLogger("api", "identity");
+var configuration = builder.Configuration;
+
+ Log.Logger = LoggerPrinter.CreateSerilogLogger("api", "identity", configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
