@@ -1,6 +1,6 @@
 namespace LinkEcommerce.Services.Basket.Grpc;
 
-public class BasketRepository
+public class BasketRepository : IBasketRepository
 {
     private readonly IDatabase _database;
     private readonly ILoggerApplicationService<BasketRepository> _logger;

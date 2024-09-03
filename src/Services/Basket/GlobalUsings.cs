@@ -11,3 +11,5 @@ global using System.Diagnostics.CodeAnalysis;
 global using Microsoft.AspNetCore.Authorization;
 global using LinkEcommerce.Services.Basket.Grpc;
 global using Serilog;
+global using LinkEcommerce.ServiceDefaults.Extensions;
+global using LinkEcommerce.Services.Basket.DI;
