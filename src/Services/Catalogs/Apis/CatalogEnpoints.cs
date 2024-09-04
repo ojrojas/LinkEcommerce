@@ -4,7 +4,7 @@ public static class CatalogsEndpoint
 {
     public static RouteGroupBuilder MapCatalogEndpointsV1(this IEndpointRouteBuilder routeBuilder)
     {
-        var api = routeBuilder.MapGroup(string.Empty).HasApiVersion(1.0);
+        var api = routeBuilder.MapGroup("api/catalogs").HasApiVersion(1.0);
 
         api.MapGet("/getallitems", GetAllItems);
         api.MapGet("/getitembyid/{id:guid}", GetItemById);
@@ -12,9 +12,9 @@ public static class CatalogsEndpoint
         api.MapGet("/getitemsbybrandidandtypeid/brand/{brandid:guid}/type/{typeid:guid}", GetItemsByBrandIdAndTypeId);
         api.MapGet("/getitemsbynames/pagesize/{pagesize:int}/pageindex/{pageindex:int}/names/{names}", GetItemsByNames);
 
-        api.MapPost("/create", CreateCatalogItem);
-        api.MapPatch("/update", UpdateCatalogItem);
-        api.MapDelete("/delete/{id:guid}", DeleteCatalogItem);
+        api.MapPost("/create", CreateCatalogItem).RequireAuthorization();
+        api.MapPatch("/update", UpdateCatalogItem).RequireAuthorization();
+        api.MapDelete("/delete/{id:guid}", DeleteCatalogItem).RequireAuthorization();
 
         // api.MapGet("/", HelloWorld);
 

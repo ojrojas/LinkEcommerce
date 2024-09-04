@@ -1,7 +1,10 @@
 <section class="text-gray-600 body-font">
-  <div class="container px-5 py-24 mx-auto">
-    <div class="flex flex-wrap -m-4">
+  @if(products$ | async; as products) {
+  @for(product of products.paginatedItems.data; track product.id){
+  <div class="container px-5 py-24 mx-auto" [routerLink]="['/products/details', product.id]">
+    <a class="flex flex-wrap -m-4">
       <app-card />
-    </div>
-  </div>
+    </a>
+  </div>}
+  }
 </section>

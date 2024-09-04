@@ -53,9 +53,9 @@ public class CatalogService : ICatalogService
         logger.LogInformation(response, "get catalog items by paginated request");
         var count = await context.CatalogItems.CountAsync(cancellationToken);
 
-        var items = context.CatalogItems.OrderBy(x => x.Name)
+        var items = await context.CatalogItems.OrderBy(x => x.Name)
         .Skip(request.PageSize * request.PageIndex)
-        .Take(request.PageSize);
+        .Take(request.PageSize).ToListAsync(cancellationToken: cancellationToken);
 
         response.PaginatedItems = new(request.PageIndex, request.PageSize, count, items);
         if (response.PaginatedItems.Count > 0)
@@ -81,10 +81,9 @@ public class CatalogService : ICatalogService
     {
         GetCatalogItemsByBrandIdResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by brand_id request");
-        CatalogItemSpecification spec = new(request.PageSize, request.PageIndex, request.BrandId);
 
         var items = context.CatalogItems.Where(x => x.CatalogBrandId.Equals(request.BrandId));
-        var count = await items.CountAsync();
+        var count = await items.CountAsync(cancellationToken: cancellationToken);
 
         var itemsOnPage = items.Skip(request.PageSize * request.PageIndex).Take(request.PageSize);
 
@@ -98,7 +97,6 @@ public class CatalogService : ICatalogService
     {
         GetItemsByBrandAndTypeIdResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by brand_id and type_id request");
-        CatalogItemSpecification spec = new(request.PageSize, request.PageIndex, request.BrandId, request.TypeId);
 
         var items = context.CatalogItems.Where(x => x.CatalogBrandId.Equals(request.BrandId) && x.CatalogTypeId.Equals(request.TypeId));
         var count = await items.CountAsync();
@@ -115,7 +113,6 @@ public class CatalogService : ICatalogService
     {
         GetCatalogItemsByNamesResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by names request");
-        CatalogItemSpecification spec = new(request.Names, request.PageSize, request.PageIndex);
 
         var items = context.CatalogItems.Where(x => x.Name.StartsWith(request.Names));
         var count = await items.CountAsync();

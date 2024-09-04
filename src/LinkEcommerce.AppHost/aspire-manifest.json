@@ -1,8 +1,8 @@
 {
   "resources": {
-    "identidad": {
+    "identity": {
       "type": "project.v0",
-      "path": "../Servicios/Identidad/Identidad.csproj",
+      "path": "../Services/Identity/Identity.csproj",
       "env": {
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
@@ -22,14 +22,90 @@
         }
       }
     },
+
+    "catalogs": {
+      "type": "project.v0",
+      "path": "../Services/Catalogs/Catalogs.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http"
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http"
+        }
+      }
+    },
+
+    "basket": {
+      "type": "project.v0",
+      "path": "../Services/Basket/Basket.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http"
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http"
+        }
+      }
+    },
+
+    "orders": {
+      "type": "project.v0",
+      "path": "../Services/Orders/Orders.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http"
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http"
+        }
+      }
+    },
+
     "angular": {
       "type": "dockerfile.v0",
       "path": "../Webs/link-app/Dockerfile",
       "context": "../Webs/link-app",
       "env": {
         "NODE_ENV": "production",
-        "services__identidad__http__0": "{identidad.bindings.http.url}",
-        "services__identidad__https__0": "{identidad.bindings.https.url}",
+        "services__identity-ecommerce__http__0": "{identity.bindings.http.url}",
+        "services__identity-ecommerce__https__0": "{identity.bindings.https.url}",
+        "services__catalogs-ecommerce__http__0": "{catalogs.bindings.http.url}",
+        "services__catalogs-ecommerce__https__0": "{catalogs.bindings.https.url}",
+        "services__basket-ecommerce__http__0": "{basket.bindings.http.url}",
+        "services__basket-ecommerce__https__0": "{basket.bindings.https.url}",
+        "services__orders-ecommerce__http__0": "{orders.bindings.http.url}",
+        "services__orders-ecommerce__https__0": "{orders.bindings.https.url}",
         "PORT": "{angular.bindings.http.targetPort}"
       },
       "bindings": {
@@ -41,6 +117,6 @@
           "external": true
         }
       }
-    }  
+    }
   }
 }

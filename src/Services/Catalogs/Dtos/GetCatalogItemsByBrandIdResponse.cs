@@ -1,6 +1,7 @@
 namespace LinkEcommerce.Services.Catalogs.Dtos;
 
-public record GetCatalogItemsByBrandIdResponse(Guid correlationId) : BaseResponse(correlationId)
+public record GetCatalogItemsByBrandIdResponse : BaseResponse
 {
+    public GetCatalogItemsByBrandIdResponse(Guid correlationId) : base(correlationId) { }
     public PaginatedItems<CatalogItem> PaginatedItems { get; set; }
 }

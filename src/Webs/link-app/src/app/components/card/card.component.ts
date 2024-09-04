@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject, inject, Input } from '@angular/core';
+import { CatalogItem } from '../../core/models/catalogitem.model';
 
 @Component({
   selector: 'app-card',
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './card.component.scss'
 })
 export class CardComponent {
-
+  @Input() catalogItem: CatalogItem | undefined = undefined;
+  constructor() {
+  }
 }

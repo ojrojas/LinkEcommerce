@@ -2,21 +2,21 @@ using Npgsql.Replication;
 
 namespace LinkEcommerce.Services.Catalogs.Dtos;
 
-public record PaginationRequest(int PageSize = 10, int PageIndex = 10) : BaseRequest
+public record PaginationRequest(int PageSize = 10, int PageIndex = 0) : BaseRequest
 {
 }
 
-public record PaginationByNamesRequest(string name, int PageSize, int PageIndex) : PaginationRequest(PageSize, PageIndex)
+public record PaginationByNamesRequest(string Names, int PageSize=10, int PageIndex=0) : PaginationRequest(PageSize, PageIndex)
 {  
-    public string Names { get; set; } = name;
+    public string Names { get; set; } = Names;
 }
 
-public record PaginationByBrandIdRequest(Guid brandId, int PageSize, int PageIndex) : PaginationRequest(PageSize, PageIndex)
+public record PaginationByBrandIdRequest(Guid BrandId, int PageSize=10, int PageIndex=0) : PaginationRequest(PageSize, PageIndex)
 {
-    public Guid BrandId { get; set; }= brandId;
+    public Guid BrandId { get; set; }= BrandId;
 }
 
-public record PaginationByBrandIdAndTypeIdRequest(Guid typeId, Guid brandId, int PageSize, int PageIndex) : PaginationByBrandIdRequest(brandId, PageSize, PageIndex)
+public record PaginationByBrandIdAndTypeIdRequest(Guid TypeId, Guid BrandId, int PageSize=10, int PageIndex=0) : PaginationByBrandIdRequest(BrandId, PageSize, PageIndex)
 {
-    public Guid TypeId { get; set; } = typeId;
+    public Guid TypeId { get; set; } = TypeId;
 }

@@ -41,7 +41,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 
-catalogs.MapCatalogEndpointsV1().RequireAuthorization();
+catalogs.MapCatalogEndpointsV1();
 app.UseDefaultOpenApi();
 
 

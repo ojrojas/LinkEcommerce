@@ -6,7 +6,6 @@ var redis = builder.AddRedis("redis")
 var rabbitMq = builder.AddRabbitMQ("eventbus");
 
 var postgres = builder.AddPostgres("postgres")
-.WithImage("ankane/pgvector")
 .WithImageTag("latest")
 .WithPgAdmin();
 
@@ -49,7 +48,8 @@ var webapp = builder.AddNpmApp("angular", "../Webs/link-app")
 .WithReference(identity)
 .WithReference(catalogs)
 .WithReference(basket)
-.WithEnvironment("Algo", "12336")
+.WithReference(orders)
+.WithReference(seq)
 .WithHttpEndpoint(env: "PORT")
 .WithExternalHttpEndpoints()
 .PublishAsDockerFile();

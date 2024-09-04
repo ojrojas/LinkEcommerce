@@ -10,11 +10,35 @@ server {
         try_files $uri $uri/ /index.html;
     }
 
-    location /api/ {
-        proxy_pass ${services__weatherapi__https__0};
+    location /identity {
+        proxy_pass ${services__identity-ecommerce__http__0};
         proxy_http_version 1.1;
-        proxy_ssl_server_name on;
+        proxy_ssl_server_name off;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        rewrite ^/api(/.*)$ $1 break;
+        rewrite ^/api/identity(/.*)$ $1 break;
+    }
+
+    location /catalogs {
+        proxy_pass ${services__catalogs-ecommerce__http__0};
+        proxy_http_version 1.1;
+        proxy_ssl_server_name off;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        rewrite ^/api/catalogs(/.*)$ $1 break;
+    }
+
+    location /basket {
+        proxy_pass ${services__basket-ecommerce__http__0};
+        proxy_http_version 1.1;
+        proxy_ssl_server_name off;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        rewrite ^/api/basket(/.*)$ $1 break;
+    }
+
+     location /orders {
+        proxy_pass ${services__orders-ecommerce__http__0};
+        proxy_http_version 1.1;
+        proxy_ssl_server_name off;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        rewrite ^/api/orders(/.*)$ $1 break;
     }
 }
