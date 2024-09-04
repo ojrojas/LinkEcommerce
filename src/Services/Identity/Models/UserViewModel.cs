@@ -14,8 +14,6 @@ public record UserViewModel
     public required string Contact { get; set; }
     public Card Card { get; set; }
     public Guid CardId { get; set; }
-    public Company Company { get; set; }
-    public Guid CompanyId { get; set; }
 }
 
 public record SecurityRegistryUser

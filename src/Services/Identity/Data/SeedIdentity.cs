@@ -36,14 +36,6 @@ public class SeedIdentity(
                 Name = "CC"
             },
             IdentificationTypeId = TYPE_IDENTIFICATION_ID,
-            Company = new Company
-            {
-                Id = COMPANY_ID,
-                Name = "TEST_ADMIN",
-                CreatedBy = USER_APPLICATION_ID,
-                CreatedDate = DateTimeOffset.UtcNow,
-                State = true
-            },
             Card = new Card
             {
                 Id = CARD_ID,

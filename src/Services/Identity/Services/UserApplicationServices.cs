@@ -268,8 +268,6 @@ public class UserApplicationServices : IUserApplicationServices
             Contact = userViewModel.Contact,
             Card = userViewModel.Card,
             CardId = userViewModel.CardId,
-            Company = userViewModel.Company,
-            CompanyId = userViewModel.CompanyId,
         };
     }
 
@@ -291,8 +289,6 @@ public class UserApplicationServices : IUserApplicationServices
             Contact = userApplication.Contact,
             Card = userApplication.Card,
             CardId = userApplication.CardId,
-            Company = userApplication.Company,
-            CompanyId = userApplication.CompanyId
         };
     }
 }

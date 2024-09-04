@@ -1,5 +1,4 @@
 global using System.Text.Json;
-global using Microsoft.EntityFrameworkCore;
 
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -35,11 +34,11 @@ global using Asp.Versioning;
 
 global using Microsoft.AspNetCore.Mvc.ApiExplorer;
 global using Ardalis.Specification;
-global using Ardalis.Specification.EntityFrameworkCore;
 global using System.ComponentModel.DataAnnotations;
 
 global using Serilog;
-
-
+global using System.Net.Http.Headers;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
+global using Microsoft.AspNetCore.Authentication;
 
 

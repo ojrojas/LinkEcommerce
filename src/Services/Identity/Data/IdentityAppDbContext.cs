@@ -5,7 +5,6 @@ public class IdentityAppDbContext : IdentityDbContext<UserApplication, UserType,
     public IdentityAppDbContext(DbContextOptions<IdentityAppDbContext> options) : base(options) { }
 
     public DbSet<Card> Cards { get; set; }
-    public DbSet<Company> Companies { get; set; }
     public DbSet<IdentificationType> IdentificationTypes { get; set; }
 
     /// <summary>
