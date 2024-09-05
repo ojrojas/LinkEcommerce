@@ -6,12 +6,16 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/products/products.component').then(component => component.ProductsComponent)
   },
   {
-    path: 'products/details/:id',
-    loadComponent: () => import('./pages/details/details.component').then(component => component.DetailsComponent)
-  },
-  {
     path: 'basket/:id',
     loadComponent: () => import('./pages/basket/basket.component').then(component => component.BasketComponent)
+  },
+  {
+    path:'catalogs',
+    loadComponent: () => import('./pages/catalogs/catalogs.component').then(component=> component.CatalogsComponent)
+  },
+  {
+    path:'orders',
+    loadComponent: () => import('./pages/orders/orders.component').then(component=> component.OrdersComponent)
   },
   {
     path: '',

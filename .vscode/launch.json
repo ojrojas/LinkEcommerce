@@ -5,20 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (Catalogs)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Services/Catalogs/bin/Debug/net8.0/Catalogs.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/src/Services/Catalogs",
-            "stopAtEntry": false,
-            "console": "internalConsole",
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
-        },
-        {
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
             "request": "launch",
@@ -29,6 +15,20 @@
             "console": "internalConsole",
             "stopAtEntry": false
         },
+        // {
+        //     "name": ".NET Core Launch (Catalogs)",
+        //     "type": "coreclr",
+        //     "request": "launch",
+        //     "preLaunchTask": "build",
+        //     "program": "${workspaceFolder}/src/Services/Catalogs/bin/Debug/net8.0/Catalogs.dll",
+        //     "args": [],
+        //     "cwd": "${workspaceFolder}/src/Services/Catalogs",
+        //     "stopAtEntry": false,
+        //     "console": "internalConsole",
+        //     "env": {
+        //         "ASPNETCORE_ENVIRONMENT": "Development"
+        //     }
+        // },
         {
             "name": ".NET Core Attach",
             "type": "coreclr",

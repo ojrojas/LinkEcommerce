@@ -17,7 +17,8 @@ internal static class Extensions
         IdentityModelEventSource.ShowPII = true;
 
         services.AddHttpContextAccessor();
-        services.AddScoped(typeof(ILoggerApplicationService<>), typeof(LoggerApplicationService<>));
-        services.AddScoped<ICatalogService, CatalogService>();
+        services.AddTransient(typeof(ILoggerApplicationService<>), typeof(LoggerApplicationService<>));
+        services.AddTransient<ICatalogService, CatalogService>();
+        services.AddTransient<CatalogSeed>();
     }
 }

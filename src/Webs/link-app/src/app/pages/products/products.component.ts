@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { CatalogServicesService } from '../../core/services/catalog-services.service';
-import { LoggerSeqService } from '../../shared/logger.seq';
+// import { LoggerSeqService } from '../../shared/logger.seq';
 import { CatalogItem } from '../../core/models/catalogitem.model';
 import { PaginationResponse } from '../../core/dtos/paginationResponse.dto';
 
@@ -17,12 +17,11 @@ import { PaginationResponse } from '../../core/dtos/paginationResponse.dto';
 })
 export class ProductsComponent {
   catalogService = inject(CatalogServicesService);
-  logger = inject(LoggerSeqService);
+  // logger = inject(LoggerSeqService);
   products$:Observable<PaginationResponse<CatalogItem[]>>;
 
   constructor() {
-    this.logger.logInfo("Heeey this works");
+    // this.logger.logInfo("Heeey this works");
     this.products$ = this.catalogService.getAllItems();
-
   }
 }

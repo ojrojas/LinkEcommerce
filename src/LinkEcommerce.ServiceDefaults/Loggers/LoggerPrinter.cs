@@ -1,3 +1,5 @@
+using LinkEcommerce.ServiceDefaults.Extensions;
+
 namespace LinkEcommerce.ServiceDefaults.Loggers;
 
 public static class LoggerPrinter

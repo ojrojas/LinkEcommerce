@@ -1,8 +1,10 @@
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
-Log.Logger = LoggerPrinter.CreateSerilogLogger("api", "catalog", configuration);
 
+var endpointSeq =configuration["SeqEndpoint"];
+
+Log.Logger = LoggerPrinter.CreateSerilogLogger("api", "catalog", configuration);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -25,9 +27,13 @@ var scope = app.Services.CreateScope();
 var service = scope.ServiceProvider;
 
 var context = service.GetRequiredService<CatalogDbContext>();
+var seed = service.GetRequiredService<CatalogSeed>();
+
 ArgumentNullException.ThrowIfNull(context);
-context.Database.EnsureDeleted();
-context.Database.EnsureCreated();
+await context.Database.EnsureDeletedAsync();
+await context.Database.EnsureCreatedAsync();
+await seed.SeedAsync();
+
 #endif
 
 var catalogs = app.NewVersionedApi();

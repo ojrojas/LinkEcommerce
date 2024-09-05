@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.2.0",
+    "@angular/cdk": "^18.2.3",
     "@angular/common": "^18.2.0",
     "@angular/compiler": "^18.2.0",
     "@angular/core": "^18.2.0",
@@ -22,6 +23,7 @@
     "@angular/router": "^18.2.0",
     "@datalust/winston-seq": "^2.0.0",
     "@ngrx/signals": "^18.0.2",
+    "ngx-toastr": "^19.0.0",
     "rxjs": "^7.8.1",
     "tslib": "^2.3.0",
     "winston": "^3.14.2",
@@ -38,8 +40,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "run-script-os": "^1.1.6",
     "tailwindcss": "^3.4.10",
-    "typescript": "~5.5.2",
-    "run-script-os": "^1.1.6"
+    "typescript": "~5.5.2"
   }
 }
