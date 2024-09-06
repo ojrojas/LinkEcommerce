@@ -1,1 +1,44 @@
-<p>catalogs works!</p>
+<h1>Catalogs LinkeCommerce</h1>
+<div class="container px-5 py-24 mx-auto">
+  <div class="flex flex-wrap -m-4">
+    <table class="table-auto border-collapse box-border">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Type</th>
+          <th>Brand</th>
+          <th colspan="3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if(products$ | async; as products) {
+        @for(product of products.paginatedItems.data; track product.id){
+        <tr>
+          <td>{{product.id}}</td>
+          <td>{{product.name}}</td>
+          <td>$ {{product.price.toLocaleString()}}</td>
+          <td>{{product.catalogType.name}}</td>
+          <td>{{product.catalogBrand.name}}</td>
+          <td class="flex flex-auto mx-1">
+            <a class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+              [routerLink]="['details', product.id]">
+              Details
+            </a>
+            <a class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+              [routerLink]="['edit', product.id]">
+              Edit
+            </a>
+            <a class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+              (click)="DeleteCatalogItem(product.id)">
+              Delete
+            </a>
+          </td>
+        </tr>
+        }
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

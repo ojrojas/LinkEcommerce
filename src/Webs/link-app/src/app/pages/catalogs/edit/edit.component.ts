@@ -1,18 +1,16 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { CatalogServicesService } from '../../../core/services/catalog-services.service';
 import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
 import { GetCatalogByIdResponse } from '../../../core/dtos/response.dto';
-import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-details',
+  selector: 'app-edit',
   standalone: true,
-  imports: [AsyncPipe, RouterLink],
-  templateUrl: './details.component.html',
-  styleUrl: './details.component.scss'
+  imports: [],
+  templateUrl: './edit.component.html',
+  styleUrl: './edit.component.scss'
 })
-export class DetailsComponent implements OnInit {
+export class EditComponent {
   catalogService: CatalogServicesService = inject(CatalogServicesService);
   catalogItemResponse$: Observable<GetCatalogByIdResponse> | undefined ;
   id = input<string>('', { alias: 'id' });

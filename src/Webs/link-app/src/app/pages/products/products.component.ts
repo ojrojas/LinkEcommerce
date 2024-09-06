@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { CardComponent } from "../../components/card/card.component";
 import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
@@ -7,11 +6,12 @@ import { CatalogServicesService } from '../../core/services/catalog-services.ser
 // import { LoggerSeqService } from '../../shared/logger.seq';
 import { CatalogItem } from '../../core/models/catalogitem.model';
 import { PaginationResponse } from '../../core/dtos/paginationResponse.dto';
+import { ListItemComponent } from './list-item/list-item.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CardComponent, RouterLink, AsyncPipe],
+  imports: [RouterLink, AsyncPipe, ListItemComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })

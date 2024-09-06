@@ -54,6 +54,8 @@ public class CatalogService : ICatalogService
         var count = await context.CatalogItems.CountAsync(cancellationToken);
 
         var items = await context.CatalogItems.OrderBy(x => x.Name)
+        .Include(t => t.CatalogType)
+        .Include(b => b.CatalogBrand)
         .Skip(request.PageSize * request.PageIndex)
         .Take(request.PageSize).ToListAsync(cancellationToken: cancellationToken);
 
@@ -72,6 +74,12 @@ public class CatalogService : ICatalogService
         logger.LogInformation(response, "Get catalog item by id request");
         logger.LogInformation("value::::", request.Id.ToString());
         response.CatalogItem = await context.CatalogItems.FirstOrDefaultAsync(x => x.Id.Equals(request.Id), cancellationToken);
+        if (response.CatalogItem != null)
+        {
+            response.CatalogItem.CatalogBrand = await context.CatalogsBrands.FirstOrDefaultAsync(x => x.Id.Equals(response.CatalogItem.CatalogBrandId));
+            response.CatalogItem.CatalogType = await context.CatalogTypes.FirstOrDefaultAsync(x => x.Id.Equals(response.CatalogItem.CatalogTypeId));
+        }
+
         logger.LogInformation(response, "Get catalogitem by id successful");
 
         return response;
@@ -85,7 +93,11 @@ public class CatalogService : ICatalogService
         var items = context.CatalogItems.Where(x => x.CatalogBrandId.Equals(request.BrandId));
         var count = await items.CountAsync(cancellationToken: cancellationToken);
 
-        var itemsOnPage = items.Skip(request.PageSize * request.PageIndex).Take(request.PageSize);
+        var itemsOnPage = items
+        .Include(t => t.CatalogType)
+        .Include(b => b.CatalogBrand)
+        .Skip(request.PageSize * request.PageIndex)
+        .Take(request.PageSize);
 
         response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.PageSize, count, itemsOnPage);
         logger.LogInformation(response, "Get catalogitem by brand_id successful");
@@ -98,10 +110,16 @@ public class CatalogService : ICatalogService
         GetItemsByBrandAndTypeIdResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by brand_id and type_id request");
 
-        var items = context.CatalogItems.Where(x => x.CatalogBrandId.Equals(request.BrandId) && x.CatalogTypeId.Equals(request.TypeId));
+        var items = context.CatalogItems
+                    .Include(t => t.CatalogType)
+                    .Include(b => b.CatalogBrand)
+                    .Where(x => x.CatalogBrandId.Equals(request.BrandId) && x.CatalogTypeId.Equals(request.TypeId));
         var count = await items.CountAsync();
 
-        var itemsOnPage = items.Skip(request.PageSize * request.PageIndex).Take(request.PageSize);
+        var itemsOnPage = items
+
+                    .Skip(request.PageSize * request.PageIndex)
+                    .Take(request.PageSize);
 
         response.PaginatedItems = new PaginatedItems<CatalogItem>(request.PageIndex, request.PageSize, count, itemsOnPage);
         logger.LogInformation(response, "Get catalogitem by brand_id and type_id successful");
@@ -114,7 +132,10 @@ public class CatalogService : ICatalogService
         GetCatalogItemsByNamesResponse response = new(request.CorrelationId);
         logger.LogInformation(response, "Get catalog item by names request");
 
-        var items = context.CatalogItems.Where(x => x.Name.StartsWith(request.Names));
+        var items = context.CatalogItems
+                    .Include(t => t.CatalogType)
+                    .Include(b => b.CatalogBrand)
+                    .Where(x => x.Name.StartsWith(request.Names));
         var count = await items.CountAsync();
 
         var itemsOnPage = await items.Skip(request.PageSize * request.PageIndex)

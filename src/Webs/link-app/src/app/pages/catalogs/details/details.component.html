@@ -20,10 +20,11 @@
       </div>
       <div class="flex">
         <span class="title-font font-medium text-2xl text-gray-900">$ {{catalogResponse.catalogItem.price.toLocaleString()}}</span>
-        <a [routerLink]="['/products']"
-          class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+        <a
+          class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+          [routerLink]="['/catalogs']">
           Back
-        </a>
+      </a>
       </div>
     </div>
     <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"

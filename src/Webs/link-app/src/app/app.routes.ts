@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: 'products',
-    loadComponent: () => import('./pages/products/products.component').then(component => component.ProductsComponent)
+    loadChildren: () => import('./pages/products/products.routes').then(component => component.ProductsRoutes)
   },
   {
     path: 'basket/:id',
@@ -11,11 +11,11 @@ export const routes: Routes = [
   },
   {
     path:'catalogs',
-    loadComponent: () => import('./pages/catalogs/catalogs.component').then(component=> component.CatalogsComponent)
+    loadChildren: () => import('./pages/catalogs/catalogs.routes').then(component=> component.CatalogRoutes)
   },
   {
     path:'orders',
-    loadComponent: () => import('./pages/orders/orders.component').then(component=> component.OrdersComponent)
+    loadChildren: () => import('./pages/orders/orders.routes').then(component=> component.RoutesOrders)
   },
   {
     path: '',

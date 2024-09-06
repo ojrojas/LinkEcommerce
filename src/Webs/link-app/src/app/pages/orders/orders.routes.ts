@@ -1,12 +1,17 @@
 import { Routes } from '@angular/router';
 
-export const routesOrders: Routes = [
+export const RoutesOrders: Routes = [
   {
-    path: 'orders/details/:id',
+    path: '',
+    loadComponent: () => import('./orders.component').then(component => component.OrdersComponent),
+    pathMatch: 'full'
+  },
+  {
+    path: 'details/:id',
     loadComponent: () => import('./details/details.component').then(component => component.DetailsComponent)
   },
   {
-    path: 'orders/form',
+    path: 'form',
     loadComponent: () => import('./form/form.component').then(component => component.FormComponent)
   }
 ]
