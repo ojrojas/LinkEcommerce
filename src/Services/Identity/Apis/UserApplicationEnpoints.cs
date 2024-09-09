@@ -13,6 +13,7 @@ public static class UserApplicationEndpoints
         api.MapPatch("/updateuserapplication", UpdateUserApplication);
         api.MapDelete("/deleteuserapplication", DeleteUserApplication);
         api.MapGet("/getuserapplicationbyid/{id:guid}", GetUserApplicationId);
+        api.MapGet("/getuserinfo", GetUserInfo);
 
 #if DEBUG
         api.MapGet("/getallusers",
@@ -22,6 +23,18 @@ public static class UserApplicationEndpoints
 #endif
 
         return api;
+    }
+
+    [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
+    private static async ValueTask<Results<Ok<GetUserByIdResponse>,BadRequest<string>, ProblemHttpResult>> GetUserInfo(
+        HttpContext context, 
+        [FromServices] IUserApplicationServices services,
+        CancellationToken cancellationToken)
+    {
+        var result = await context.AuthenticateAsync(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
+        var response = await services.GetUserByIdAsync(new(Guid.Parse(result.Principal.GetUserId())));
+
+        return TypedResults.Ok(response);
     }
 
     [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]

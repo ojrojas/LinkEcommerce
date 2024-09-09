@@ -1,7 +1,6 @@
-import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GuidGenerator } from '../../shared/guid-generator';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -15,6 +14,7 @@ export class IdentityService {
   ) {
     this.headers = new HttpHeaders().set("Content-Type", "application/x-www-form-urlencoded")
       .set("Accept", "*/*");
+
   }
 
   signInOutSide(): void {
@@ -23,7 +23,6 @@ export class IdentityService {
   }
 
   signIn(route: string, granttype: string) {
-
     let formData = new URLSearchParams();
     formData.append("grant_type", granttype);
     formData.append("scope", "ecommerce_scope");
@@ -42,7 +41,15 @@ export class IdentityService {
     });
   }
 
-
+  getInfoUser(token: string ) {
+   return this.httpClient.get("/identity/api/userapplication/getuserinfo?api-version=1.0", {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      observe:'response',
+      responseType:'json'
+    });
+  }
 
   logout() {
     this.httpClient.get("/identity/connect/logout", { observe: 'response', responseType: 'arraybuffer' })

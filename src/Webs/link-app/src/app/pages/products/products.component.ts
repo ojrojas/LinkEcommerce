@@ -8,6 +8,7 @@ import { CatalogItem } from '../../core/models/catalogitem.model';
 import { PaginationResponse } from '../../core/dtos/paginationResponse.dto';
 import { ListItemComponent } from './list-item/list-item.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { ECommerceStore } from '../../store.signals';
 
 @Component({
   selector: 'app-products',
@@ -18,6 +19,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 })
 export class ProductsComponent {
   catalogService = inject(CatalogServicesService);
+  store = inject(ECommerceStore);
   // logger = inject(LoggerSeqService);
   products$: Observable<PaginationResponse<CatalogItem[]>>;
 

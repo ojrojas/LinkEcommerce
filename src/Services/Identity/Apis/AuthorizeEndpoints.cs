@@ -53,23 +53,34 @@ public static class AuthorizeEndpoints
 
         ArgumentNullException.ThrowIfNull(request.ClientId);
 
+        Console.WriteLine($"Counts identities {context.User.Identities.Count()}");
+        foreach (var newIdentity in context.User.Identities)
+        {
+            foreach (var newClaim in newIdentity.Claims)
+                Console.WriteLine($"{newClaim.ValueType} :::: {newClaim.Value}");
+        }
+
+
         var application = await applicationManager.FindByClientIdAsync(request.ClientId) ??
         throw new InvalidOperationException("The application details cannot be found in the database.");
 
         // Create the claims-based identity that will be used by OpenIddict to generate tokens.
 
-        var identity = new ClaimsIdentity(
+        var identity = new ClaimsIdentity(result.Principal.Claims,
             authenticationType: TokenValidationParameters.DefaultAuthenticationType,
             nameType: Claims.Name,
             roleType: Claims.Role);
+        
+        foreach(var response in result.Principal.Claims)
+            Console.WriteLine($"{response.Subject.Name} ::: {response.Value}");
 
         // Add the claims that will be persisted in the tokens (use the client_id as the subject identifier).
-        identity.SetClaim(Claims.Subject, await applicationManager.GetClientIdAsync(application));
-        identity.SetClaim(Claims.Name, await applicationManager.GetDisplayNameAsync(application));
+        identity.SetClaim(Claims.Subject, result.Principal.FindFirst(x=> x.Type.Equals(ClaimTypes.NameIdentifier)).Value);
+        identity.SetClaim(Claims.Name, result.Principal.FindFirst(x => x.Type == ClaimTypes.Name).Value);
 
         identity.SetScopes(request.GetScopes());
         var resources = await scopeManager.ListResourcesAsync(identity.GetScopes()).ToListExtensionsAsync();
-        foreach(var resource in resources)
+        foreach (var resource in resources)
             Console.WriteLine($"Resource found {resource}");
         identity.SetResources(resources);
         identity.SetDestinations(GetDestination.GetDestinations);

@@ -31,7 +31,7 @@ export const ECommerceStore = signalStore(
       patchState(store, { token: token });
     },
     loginApp() {
-      const response = identityService.signIn("authorize", "implicit").subscribe(
+      identityService.signIn("authorize", "implicit").subscribe(
         result => {
           if (result != undefined && result.url != undefined)
             console.log("REsult http", result);
@@ -40,10 +40,13 @@ export const ECommerceStore = signalStore(
       );
     },
     logoutApp(){
-      const response = identityService.logout();
+      identityService.logout();
     },
-    getUserInfo(){
-
+    getUserInfo(token:string){
+      identityService.getInfoUser(token).subscribe(result => {
+        const response = result.body as {user: UserViewModel, correlationid: string}
+        patchState(store, {user: response.user});
+      });
     }
   }))
 );

@@ -177,7 +177,10 @@ public class UserApplicationServices : IUserApplicationServices
 
         var parameters = request.GetParameters();
 
-        _logger.LogInformation($"Login user application request {parameters}");
+        foreach(var param in parameters)
+        {
+        _logger.LogInformation($"Login user application request {param.Key} : {param.Value}");
+        }
         var userApplication = await _userManager.FindByEmailAsync(request.Username);
         _logger.LogInformation($"user: {userApplication}");
         ArgumentNullException.ThrowIfNull(userApplication);

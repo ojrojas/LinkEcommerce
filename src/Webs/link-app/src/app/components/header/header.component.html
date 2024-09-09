@@ -17,15 +17,15 @@
   </mat-grid-tile>
 
   <mat-grid-tile>
-    @if(userViewModel | async; as user)
+    @if(this.store.user(); as user)
     {
     <div class="zone-user">
-      <button mat-button [matMenuTriggerFor]="menu">{{user.Name}} {{user.LastName.substring(user.LastName.length-1, user.LastName.length)}}</button>
+      <button mat-button [matMenuTriggerFor]="menu">{{user.Name}}</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
       <div>
-        <a mat-fab aria-label="Add to card" [routerLink]="['/basket',user.id]" matBadge="{{itemsCount}}">
+        <a mat-fab aria-label="Add to card" [routerLink]="['/basket',this.store.user()?.id]" matBadge="{{itemsCount}}">
           <mat-icon>shopping_cart</mat-icon>
         </a>
       </div>

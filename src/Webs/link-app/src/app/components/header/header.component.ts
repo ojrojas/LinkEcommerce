@@ -5,7 +5,6 @@ import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserViewModel } from '../../core/models/userapplication.model';
-import { IdentityService } from '../../core/services/identity-services.service';
 import { ECommerceStore } from '../../store.signals';
 
 @Component({
@@ -19,12 +18,12 @@ export class HeaderComponent implements OnInit {
   isvisible: boolean = true;
   itemsCount: number = 0;
   store = inject(ECommerceStore);
-  userViewModel: Observable<UserViewModel> | undefined;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.breakpointObserver.observe('(max-width:762px)')
@@ -40,8 +39,7 @@ export class HeaderComponent implements OnInit {
 
   navigateToCart() {
     const isLogged = this.store.token();
-    if (isLogged?.access_token != undefined)
-    {
+    if (isLogged?.access_token != undefined) {
       this.router.navigate(['basket', 1])
     }
     else this.store.loginApp();

@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, isDevMode, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { IdentityService } from '../../core/services/identity-services.service';
@@ -30,12 +30,11 @@ export class LoginComponent {
       }))
 
     ).subscribe(result => {
-      if (result.access_token != null)
-      {
+      if (result.access_token != null) {
         this.store.setToken(result as unknown as Token);
-        console.log("token", result.access_token, "type", result.token_type);
-        // const claims = atob(result.access_token.split('.')[1]);
-        // console.log("Claims", claims);
+        if (isDevMode())
+          console.log("token", this.store.token()?.access_token);
+        this.store.getUserInfo(this.store.token()?.access_token!);
         this.router.navigate(['products']);
       }
     });
