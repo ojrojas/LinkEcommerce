@@ -7,18 +7,19 @@ import { CatalogServicesService } from '../../core/services/catalog-services.ser
 import { CatalogItem } from '../../core/models/catalogitem.model';
 import { PaginationResponse } from '../../core/dtos/paginationResponse.dto';
 import { ListItemComponent } from './list-item/list-item.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [RouterLink, AsyncPipe, ListItemComponent],
+  imports: [RouterLink, AsyncPipe, ListItemComponent, MatGridListModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent {
   catalogService = inject(CatalogServicesService);
   // logger = inject(LoggerSeqService);
-  products$:Observable<PaginationResponse<CatalogItem[]>>;
+  products$: Observable<PaginationResponse<CatalogItem[]>>;
 
   constructor() {
     // this.logger.logInfo("Heeey this works");

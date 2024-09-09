@@ -4,7 +4,6 @@ export const RoutesOrders: Routes = [
   {
     path: '',
     loadComponent: () => import('./orders.component').then(component => component.OrdersComponent),
-    pathMatch: 'full'
   },
   {
     path: 'details/:id',

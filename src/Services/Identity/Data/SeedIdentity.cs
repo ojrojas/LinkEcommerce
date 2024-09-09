@@ -99,7 +99,9 @@ public class SeedIdentity(
                 ClientId = "identity_swagger",
                 ClientType = ClientTypes.Public,
                 DisplayName = "Identity Client Swagger",
-                RedirectUris = { new Uri($"{configuration["IdentityApiClient"]}/swagger/oauth2-redirect.html") },
+                RedirectUris = {
+                    new Uri($"{configuration["IdentityApiClient"]}/swagger/oauth2-redirect.html"),
+                    },
                 Permissions = {
                         Permissions.Endpoints.Token,
                         Permissions.Endpoints.Logout,
@@ -113,7 +115,7 @@ public class SeedIdentity(
                         Permissions.Scopes.Profile,
                         Permissions.Scopes.Roles,
                         Permissions.Scopes.Roles,
-                        Permissions.Prefixes.Scope + "identity_api",
+                        Permissions.Prefixes.Scope + "identity_scope",
                         // Permissions.Prefixes.Scope + "catalog_api"
                     },
                 PostLogoutRedirectUris = { new Uri($"{configuration["IdentityApiClient"]}/connect/logout"), new Uri($"{configuration["IdentityApiClient"]}/swagger/") },
@@ -148,6 +150,35 @@ public class SeedIdentity(
                 Requirements = { Requirements.Features.ProofKeyForCodeExchange }
             });
         }
+
+        if (await applicationManager.FindByClientIdAsync("ecommerce_spa") is null)
+        {
+            await applicationManager.CreateAsync(new OpenIddictApplicationDescriptor
+            {
+                ApplicationType = ApplicationTypes.Web,
+                ClientId = "ecommerce_spa",
+                ClientSecret = "1caa3082-0437-4b16-b150-898a2d4a5227",
+                ClientType = ClientTypes.Confidential,
+                DisplayName = "LinkEcommerce Client",
+                RedirectUris = { new Uri($"{configuration["WebApp"]}/login") },
+                Permissions = {
+                        Permissions.Endpoints.Token,
+                        Permissions.Endpoints.Logout,
+                        Permissions.GrantTypes.Implicit,
+                        Permissions.GrantTypes.RefreshToken,
+                        Permissions.Endpoints.Authorization,
+                        Permissions.ResponseTypes.Token,
+                        Permissions.Scopes.Email,
+                        Permissions.Scopes.Profile,
+                        Permissions.Scopes.Roles,
+                        Permissions.Prefixes.Scope + "ecommerce_scope",
+                        Permissions.Prefixes.Scope + "identity_scope"
+                    },
+                PostLogoutRedirectUris = { new Uri($"{configuration["IdentityApiClient"]}/connect/logout"), new Uri($"{configuration["CatalogApiClient"]}/swagger/") },
+                Requirements = { Requirements.Features.ProofKeyForCodeExchange }
+            });
+        }
+
 
         if (await applicationManager.FindByClientIdAsync("catalog_api") is null)
         {
@@ -203,6 +234,18 @@ public class SeedIdentity(
             await scopeManager.CreateAsync(new OpenIddictScopeDescriptor
             {
                 Name = "identity_scope",
+                Resources =
+                {
+                    "resource_server_identity"
+                }
+            });
+        }
+
+        if (await scopeManager.FindByNameAsync("ecommerce_scope") is null)
+        {
+            await scopeManager.CreateAsync(new OpenIddictScopeDescriptor
+            {
+                Name = "ecommerce_scope",
                 Resources =
                 {
                     "resource_server_identity"

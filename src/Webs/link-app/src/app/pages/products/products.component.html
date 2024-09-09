@@ -1,11 +1,6 @@
-<section class="text-gray-600 body-font">
-  <div class="container px-5 py-24 mx-auto">
-    <div class="flex flex-wrap -m-4">
-      @if(products$ | async; as products) {
-      @for(product of products.paginatedItems.data; track product.id){
-          <app-list-item class="lg:w-1/4 md:w-1/2 p-4 w-full rounded-lg hover:bg-slate-100 p-5" [catalogItem]="product"/>
-        }
-      }
-    </div>
-  </div>
-</section>
+<div class="products-content">
+  @if(products$ | async; as products) {
+  @for(product of products.paginatedItems.data; track product.id){
+  <app-list-item class="card-products" [catalogItem]="product" />
+  }}
+</div>

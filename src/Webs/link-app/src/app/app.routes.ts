@@ -2,12 +2,16 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'products',
-    loadChildren: () => import('./pages/products/products.routes').then(component => component.ProductsRoutes)
-  },
-  {
     path: 'basket/:id',
     loadComponent: () => import('./pages/basket/basket.component').then(component => component.BasketComponent)
+  },
+  {
+    path:'login',
+    loadComponent: () => import('./pages/login/login.component').then(component=> component.LoginComponent)
+  },
+  {
+    path: 'products',
+    loadChildren: () => import('./pages/products/products.routes').then(component => component.ProductsRoutes)
   },
   {
     path:'catalogs',

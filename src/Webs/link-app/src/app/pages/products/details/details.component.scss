@@ -1,0 +1,23 @@
+mat-grid-list{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  background-color: azure;
+}
+
+mat-grid-list dt{
+  font-weight: bold;
+}
+
+.content-product {
+  margin: 3%;
+}
+
+.description-content{
+  text-align: justify !important;
+}
+
+.actions-button{
+  display: flex;
+  justify-content: space-between;
+}

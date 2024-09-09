@@ -1,16 +1,46 @@
-<header class="text-gray-600 body-font">
-  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-      </svg>
-      <span class="ml-3 text-xl">LinkeCommerce</span>
-    </a>
-    <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-      <a class="mr-5 hover:text-gray-900" routerLink="/products">Products</a>
-      <a class="mr-5 hover:text-gray-900" routerLink="/catalogs">Catalogs</a>
-      <a class="mr-5 hover:text-gray-900" routerLink="/orders">Orders</a>
-      <a class="mr-5 hover:text-gray-900" routerLink="/basket/1">Basket</a>
-    </nav>
-  </div>
-</header>
+<mat-grid-list class="header-app" cols="3" rowHeight="100px">
+  <mat-grid-tile>
+    @if(isvisible)
+    {
+    <h3 class="title-app">Link-eCommerce</h3>
+    }
+    @else {
+    <svg xmlns="http://www.w3.org/2000/svg" style="width: 70px;height:70px" fill="none" stroke="currentColor"
+      stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+    </svg>
+    }
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <a class="navs-items" mat-button [routerLink]="['Products']">Products</a>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    @if(userViewModel | async; as user)
+    {
+    <div class="zone-user">
+      <button mat-button [matMenuTriggerFor]="menu">{{user.Name}} {{user.LastName.substring(user.LastName.length-1, user.LastName.length)}}</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
+      <div>
+        <a mat-fab aria-label="Add to card" [routerLink]="['/basket',user.id]" matBadge="{{itemsCount}}">
+          <mat-icon>shopping_cart</mat-icon>
+        </a>
+      </div>
+    </div>
+    }
+    @else
+    {
+    <div class="zone-user">
+      <button mat-button (click)="SigIn()">Sig In</button>
+      <div>
+        <a mat-fab aria-label="Add to card" (click)="navigateToCart()" matBadgeSize="large" matBadge="{{itemsCount}}">
+          <mat-icon>shopping_cart</mat-icon>
+        </a>
+      </div>
+    </div>
+    }
+  </mat-grid-tile>
+</mat-grid-list>

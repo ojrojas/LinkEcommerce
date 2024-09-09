@@ -14,6 +14,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withFetch(),
       withInterceptors([LoggerErrorResponseInterceptor])
-    ), provideAnimationsAsync()
+    ), provideAnimationsAsync(), provideAnimationsAsync()
   ]
 };

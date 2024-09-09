@@ -58,6 +58,7 @@ identity.WithEnvironment("IdentityApiClient", identity.GetEndpoint("http"))
 .WithEnvironment("BasketApiClient", basket.GetEndpoint("http"))
 .WithEnvironment("OrderingApiClient", orders.GetEndpoint("http"))
 .WithEnvironment("Identity__Url", identity.GetEndpoint("http"))
-.WithEnvironment("CatalogApiClient", catalogs.GetEndpoint("http"));
+.WithEnvironment("CatalogApiClient", catalogs.GetEndpoint("http"))
+.WithEnvironment("WebApp", webapp.GetEndpoint("http"));
 
 builder.Build().Run();
