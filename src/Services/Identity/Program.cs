@@ -1,3 +1,5 @@
+using OpenIddict.Validation.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;

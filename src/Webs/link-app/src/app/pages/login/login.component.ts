@@ -1,7 +1,9 @@
-import { Component, input, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject, input, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { IdentityService } from '../../core/services/identity-services.service';
+import { ECommerceStore } from '../../store.signals';
+import { Token } from '../../core/dtos/token.response.dto';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +15,10 @@ import { IdentityService } from '../../core/services/identity-services.service';
 export class LoginComponent {
 
   contentAuthorizer = signal<string>('');
+  store = inject(ECommerceStore);
   constructor(
     private activatedRoute: ActivatedRoute,
-    private identityService: IdentityService
+    private router: Router
   ) {
     this.activatedRoute.fragment.pipe(map(fragment => new URLSearchParams(fragment!)),
       map(params => ({
@@ -28,7 +31,13 @@ export class LoginComponent {
 
     ).subscribe(result => {
       if (result.access_token != null)
-        console.log(result.access_token);
+      {
+        this.store.setToken(result as unknown as Token);
+        console.log("token", result.access_token, "type", result.token_type);
+        // const claims = atob(result.access_token.split('.')[1]);
+        // console.log("Claims", claims);
+        this.router.navigate(['products']);
+      }
     });
   }
 }

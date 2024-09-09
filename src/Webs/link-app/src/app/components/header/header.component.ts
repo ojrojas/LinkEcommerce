@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ModulesMaterial } from '../../shared/components.material.modules';
 import { AsyncPipe } from '@angular/common';
@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserViewModel } from '../../core/models/userapplication.model';
 import { IdentityService } from '../../core/services/identity-services.service';
+import { ECommerceStore } from '../../store.signals';
 
 @Component({
   selector: 'app-header',
@@ -15,14 +16,14 @@ import { IdentityService } from '../../core/services/identity-services.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  userViewModel: Observable<UserViewModel> | undefined;
   isvisible: boolean = true;
   itemsCount: number = 0;
+  store = inject(ECommerceStore);
+  userViewModel: Observable<UserViewModel> | undefined;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
-    private identityService: IdentityService
   ) { }
 
   ngOnInit(): void {
@@ -34,25 +35,19 @@ export class HeaderComponent implements OnInit {
         else {
           this.isvisible = false;
         }
-      })
+      });
   }
 
   navigateToCart() {
-    this.router.navigate(['basket', 1])
+    const isLogged = this.store.token();
+    if (isLogged?.access_token != undefined)
+    {
+      this.router.navigate(['basket', 1])
+    }
+    else this.store.loginApp();
   }
 
   logout() {
-
-  }
-
-  SigIn() {
-    console.log("Press Sign");
-    this.identityService.signIn("authorize", "implicit").subscribe(
-      result => {
-        if (result != undefined && result.url != undefined)
-          console.log("REsult http", result);
-          window.location.href = result.url!;
-      }
-    );
+    this.store.logoutApp();
   }
 }

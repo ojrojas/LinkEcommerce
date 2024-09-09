@@ -3,6 +3,8 @@ import { BasketCatalogItem } from './core/models/basketcatalogitem.model'
 import { CatalogItem } from './core/models/catalogitem.model';
 import { UserViewModel } from './core/models/userapplication.model';
 import { Token } from './core/dtos/token.response.dto';
+import { inject } from '@angular/core';
+import { IdentityService } from './core/services/identity-services.service';
 
 type ECommerceState =
   {
@@ -24,8 +26,24 @@ const initialState: ECommerceState = {
 export const ECommerceStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withMethods((store) => ({
-    getAllProducts(): void {
+  withMethods((store, identityService = inject(IdentityService)) => ({
+    setToken(token: Token){
+      patchState(store, { token: token });
+    },
+    loginApp() {
+      const response = identityService.signIn("authorize", "implicit").subscribe(
+        result => {
+          if (result != undefined && result.url != undefined)
+            console.log("REsult http", result);
+            window.location.href = result.url!;
+        }
+      );
+    },
+    logoutApp(){
+      const response = identityService.logout();
+    },
+    getUserInfo(){
+
     }
   }))
 );

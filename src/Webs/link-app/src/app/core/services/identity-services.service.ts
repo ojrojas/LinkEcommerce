@@ -22,7 +22,7 @@ export class IdentityService {
     window.location.href = `/identity/connect/authorize?client_id=identity_swagger&response_type=token&redirect_uri=${hostAngular}/login`;
   }
 
-  signIn(route: string, granttype:string) {
+  signIn(route: string, granttype: string) {
 
     let formData = new URLSearchParams();
     formData.append("grant_type", granttype);
@@ -41,6 +41,7 @@ export class IdentityService {
       observe: 'response'
     });
   }
+
 
 
   logout() {
