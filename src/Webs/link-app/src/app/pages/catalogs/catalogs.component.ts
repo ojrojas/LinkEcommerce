@@ -1,10 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { PaginationResponse } from '../../core/dtos/paginationResponse.dto';
-import { CatalogServicesService } from '../../core/services/catalog-services.service';
-import { CatalogItem } from '../../core/models/catalogitem.model';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CatalogECommerceStore } from '../../core/stores/catalogs.store.signals';
 
 @Component({
   selector: 'app-catalogs',
@@ -14,14 +11,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './catalogs.component.scss'
 })
 export class CatalogsComponent {
-  catalogService = inject(CatalogServicesService);
-  products$:Observable<PaginationResponse<CatalogItem[]>>;
+  store = inject(CatalogECommerceStore);
 
   constructor() {
-    this.products$ = this.catalogService.getAllItems();
   }
 
   DeleteCatalogItem(id: string){
-    this.catalogService
+    this.store.deleteCatalogItemById(id);
   }
 }

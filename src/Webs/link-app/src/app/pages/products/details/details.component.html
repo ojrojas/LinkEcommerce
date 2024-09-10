@@ -1,31 +1,32 @@
-@if(catalogItemResponse$ | async; as catalogResponse){
+@if(this.store.catalogItem()){
 <mat-grid-list cols="2" style="margin: 3%;" rowHeight="600px">
   <mat-grid-tile>
-    <img style="object-fit: cover;" width="446px" height="586px" src="{{catalogResponse.catalogItem.pictureBase64}}" />
+    <img style="object-fit: cover;" width="446px" height="586px"
+      src="{{this.store.catalogItem()?.catalogItem?.pictureBase64}}" />
   </mat-grid-tile>
   <mat-grid-tile style="display: flex;">
-   <div class="content-product">
-    <dl >
-      <dt>Name</dt>
-      <dd>{{catalogResponse.catalogItem.name}}</dd>
-      <dt>Description</dt>
-      <dd class="description-content">{{catalogResponse.catalogItem.description}}</dd>
-      <dt>Brand</dt>
-      <dd class="description-content">{{catalogResponse.catalogItem.catalogBrand.name}}</dd>
-      <dt>Type</dt>
-      <dd class="description-content">{{catalogResponse.catalogItem.catalogType.name}}</dd>
-      <dt>Price</dt>
-      <dd>$ {{catalogResponse.catalogItem.price.toLocaleString()}}</dd>
-      <dt>In Stock</dt>
-      <dd>{{getInfoUnits(catalogResponse.catalogItem.availableQuantity)}}</dd>
-    </dl>
-    <mat-divider></mat-divider>
-    <br/>
-    <div class="actions-button">
-      <button mat-raised-button>Add to cart</button>
-      <a routerLink="['products']" mat-button>Back to Products</a>
+    <div class="content-product">
+      <dl>
+        <dt>Name</dt>
+        <dd>{{this.store.catalogItem()?.catalogItem?.name}}</dd>
+        <dt>Description</dt>
+        <dd class="description-content">{{this.store.catalogItem()?.catalogItem?.description}}</dd>
+        <dt>Brand</dt>
+        <dd class="description-content">{{this.store.catalogItem()?.catalogItem?.catalogBrand?.name}}</dd>
+        <dt>Type</dt>
+        <dd class="description-content">{{this.store.catalogItem()?.catalogItem?.catalogType?.name}}</dd>
+        <dt>Price</dt>
+        <dd>$ {{this.store.catalogItem()?.catalogItem?.price?.toLocaleString()}}</dd>
+        <dt>In Stock</dt>
+        <dd>{{getInfoUnits(this.store.catalogItem()?.catalogItem?.availableQuantity!)}}</dd>
+      </dl>
+      <mat-divider></mat-divider>
+      <br />
+      <div class="actions-button">
+        <button mat-raised-button>Add to cart</button>
+        <a routerLink="['products']" mat-button>Back to Products</a>
+      </div>
     </div>
-   </div>
   </mat-grid-tile>
 </mat-grid-list>
 }

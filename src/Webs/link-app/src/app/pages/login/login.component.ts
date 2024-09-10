@@ -1,8 +1,7 @@
 import { Component, inject, input, isDevMode, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
-import { IdentityService } from '../../core/services/identity-services.service';
-import { ECommerceStore } from '../../store.signals';
+import { IdentityECommerceStore } from '../../core/stores/identity.store.signals';
 import { Token } from '../../core/dtos/token.response.dto';
 
 @Component({
@@ -15,7 +14,7 @@ import { Token } from '../../core/dtos/token.response.dto';
 export class LoginComponent {
 
   contentAuthorizer = signal<string>('');
-  store = inject(ECommerceStore);
+  store = inject(IdentityECommerceStore);
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router

@@ -1,6 +1,6 @@
 <div class="products-content">
-  @if(products$ | async; as products) {
-  @for(product of products.paginatedItems.data; track product.id){
+  @if(this.store.catalogItems()) {
+  @for(product of this.store.catalogItems()?.paginatedItems?.data; track product.id){
   <app-list-item class="card-products" [catalogItem]="product" />
   }}
 </div>

@@ -16,14 +16,14 @@ export interface IdentificationType extends BaseEntity {
 
 export interface UserViewModel {
   id: string;
-  Name: string;
-  MiddleName: string;
-  LastName: string;
-  SurName: string;
+  name: string;
+  middleName: string;
+  lastName: string;
+  surName: string;
   identificationType: IdentificationType;
-  IdentificationTypeId: string;
-  IdentificationNumber: string;
-  BirthDate: Date;
+  identificationTypeId: string;
+  identificationNumber: string;
+  birthDate: Date;
   address: string;
   contact: string;
   card: Card;

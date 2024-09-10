@@ -17,10 +17,10 @@
   </mat-grid-tile>
 
   <mat-grid-tile>
-    @if(this.store.user(); as user)
+    @if(this.store.user())
     {
     <div class="zone-user">
-      <button mat-button [matMenuTriggerFor]="menu">{{user.Name}}</button>
+      <button mat-button [matMenuTriggerFor]="menu">{{this.store.user()?.name}}</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
@@ -34,9 +34,9 @@
     @else
     {
     <div class="zone-user">
-      <button mat-button (click)="navigateToCart()">Sig In</button>
+      <button mat-button (click)="loginApp()">Sig In</button>
       <div>
-        <a mat-fab aria-label="Add to card" (click)="navigateToCart()" matBadgeSize="large" matBadge="{{itemsCount}}">
+        <a mat-fab aria-label="Add to card" (click)="loginApp()" matBadgeSize="large" matBadge="{{itemsCount}}">
           <mat-icon>shopping_cart</mat-icon>
         </a>
       </div>

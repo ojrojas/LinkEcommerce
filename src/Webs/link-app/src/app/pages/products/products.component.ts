@@ -1,30 +1,31 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { CatalogServicesService } from '../../core/services/catalog-services.service';
 // import { LoggerSeqService } from '../../shared/logger.seq';
 import { CatalogItem } from '../../core/models/catalogitem.model';
 import { PaginationResponse } from '../../core/dtos/paginationResponse.dto';
 import { ListItemComponent } from './list-item/list-item.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { ECommerceStore } from '../../store.signals';
+import { CatalogECommerceStore } from '../../core/stores/catalogs.store.signals';
 
 @Component({
   selector: 'app-products',
   standalone: true,
   imports: [RouterLink, AsyncPipe, ListItemComponent, MatGridListModule],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.scss'
+  styleUrl: './products.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductsComponent {
-  catalogService = inject(CatalogServicesService);
-  store = inject(ECommerceStore);
+export class ProductsComponent implements OnInit {
+  store = inject(CatalogECommerceStore);
   // logger = inject(LoggerSeqService);
-  products$: Observable<PaginationResponse<CatalogItem[]>>;
+
 
   constructor() {
-    // this.logger.logInfo("Heeey this works");
-    this.products$ = this.catalogService.getAllItems();
+  }
+  ngOnInit(): void {
+    this.store.getAllCatalogItems();
+    console.log("items", this.store.catalogItems()?.paginatedItems);
   }
 }

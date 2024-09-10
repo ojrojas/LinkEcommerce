@@ -2,10 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ModulesMaterial } from '../../shared/components.material.modules';
 import { AsyncPipe } from '@angular/common';
-import { Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { UserViewModel } from '../../core/models/userapplication.model';
-import { ECommerceStore } from '../../store.signals';
+import { IdentityECommerceStore } from '../../core/stores/identity.store.signals';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +15,7 @@ import { ECommerceStore } from '../../store.signals';
 export class HeaderComponent implements OnInit {
   isvisible: boolean = true;
   itemsCount: number = 0;
-  store = inject(ECommerceStore);
+  store = inject(IdentityECommerceStore);
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -37,7 +35,7 @@ export class HeaderComponent implements OnInit {
       });
   }
 
-  navigateToCart() {
+  loginApp() {
     const isLogged = this.store.token();
     if (isLogged?.access_token != undefined) {
       this.router.navigate(['basket', 1])
@@ -47,5 +45,6 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.store.logoutApp();
+    this.router.navigate(['products']);
   }
 }

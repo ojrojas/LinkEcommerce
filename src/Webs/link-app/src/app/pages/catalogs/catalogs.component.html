@@ -13,8 +13,8 @@
         </tr>
       </thead>
       <tbody>
-        @if(products$ | async; as products) {
-        @for(product of products.paginatedItems.data; track product.id){
+        @if(this.store.catalogItems()) {
+        @for(product of this.store.catalogItems()?.paginatedItems?.data; track product.id){
         <tr>
           <td>{{product.id}}</td>
           <td>{{product.name}}</td>

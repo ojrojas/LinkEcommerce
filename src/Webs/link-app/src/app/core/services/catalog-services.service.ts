@@ -8,7 +8,7 @@ import { GetCatalogByIdResponse } from '../dtos/response.dto';
 @Injectable({
   providedIn: 'root'
 })
-export class CatalogServicesService {
+export class CatalogService {
   private readonly _httpClient = inject(HttpClient);
 
   getAllItems(pageSize: number = 12, pageIndex: number = 0, apiVersion: string = "1.0"): Observable<PaginationResponse<CatalogItem[]>> {

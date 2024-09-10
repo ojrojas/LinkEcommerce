@@ -1,7 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { CatalogServicesService } from '../../../core/services/catalog-services.service';
-import { Observable } from 'rxjs';
-import { GetCatalogByIdResponse } from '../../../core/dtos/response.dto';
+import { CatalogECommerceStore } from '../../../core/stores/catalogs.store.signals';
 
 @Component({
   selector: 'app-edit',
@@ -11,12 +9,12 @@ import { GetCatalogByIdResponse } from '../../../core/dtos/response.dto';
   styleUrl: './edit.component.scss'
 })
 export class EditComponent {
-  catalogService: CatalogServicesService = inject(CatalogServicesService);
-  catalogItemResponse$: Observable<GetCatalogByIdResponse> | undefined ;
+  store = inject(CatalogECommerceStore);
+  catalogItemResponse = this.store.catalogItem();
   id = input<string>('', { alias: 'id' });
 
   ngOnInit(): void {
     console.log("catalogItem", this.id());
-    this.catalogItemResponse$=  this.catalogService.getItemById(this.id());
+    this.store.getItemById(this.id());
   }
 }
