@@ -2,8 +2,8 @@ import { patchState, signalStore, withMethods, withState } from '@ngrx/signals'
 import { UserViewModel } from '../models/userapplication.model';
 import { Token } from '../dtos/token.response.dto';
 import { inject } from '@angular/core';
-import { IdentityService } from '../services/identity-services.service';
-import { CatalogService } from '../services/catalog-services.service';
+import { IdentityService } from '../services/identity.service';
+import { CatalogService } from '../services/catalog.service';
 import { setFulfilled, setPending, withRequestStatus } from './state.request.features';
 
 type IdentityECommerceState =

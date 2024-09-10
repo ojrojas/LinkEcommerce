@@ -1,7 +1,7 @@
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals'
 import { CatalogItem } from '../models/catalogitem.model';
 import { inject } from '@angular/core';
-import { CatalogService } from '../services/catalog-services.service';
+import { CatalogService } from '../services/catalog.service';
 import { setFulfilled, setPending, withRequestStatus } from './state.request.features';
 import { PaginationResponse } from '../dtos/paginationResponse.dto';
 import { GetCatalogByIdResponse } from '../dtos/response.dto';

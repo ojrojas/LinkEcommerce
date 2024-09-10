@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ModulesMaterial } from '../../shared/components.material.modules';
+import { BasketService } from '../../core/services/basket.service';
 
 export interface PeriodicElement {
   name: string;
@@ -33,6 +34,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class BasketComponent {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
-
   clickedRows = new Set<PeriodicElement>();
+
 }

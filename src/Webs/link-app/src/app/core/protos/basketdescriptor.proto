@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option csharp_namespace = "LinkEcommerce.Services.Basket.Grpc";
+
+package BasketApi;
+
+service Basket {
+    rpc GetBasket(GetBasketRequest) returns (CustomerBasketResponse) {}
+    rpc UpdateBasket(UpdateBasketRequest) returns (CustomerBasketResponse) {}
+    rpc DeleteBasket(DeleteBasketRequest) returns (DeleteBasketResponse) {}
+}
+
+message GetBasketRequest {
+}
+
+message CustomerBasketResponse {
+    repeated BasketCatalogItem catalogitems = 1;
+}
+
+message BasketCatalogItem {
+    int32 catalogitem_id = 2;
+    int32 quantity = 6;
+}
+
+message UpdateBasketRequest {
+    repeated BasketCatalogItem catalogitems = 2;
+}
+
+message DeleteBasketRequest {
+}
+
+message DeleteBasketResponse {
+}

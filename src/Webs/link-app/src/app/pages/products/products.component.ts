@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 // import { LoggerSeqService } from '../../shared/logger.seq';
-import { CatalogItem } from '../../core/models/catalogitem.model';
-import { PaginationResponse } from '../../core/dtos/paginationResponse.dto';
 import { ListItemComponent } from './list-item/list-item.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CatalogECommerceStore } from '../../core/stores/catalogs.store.signals';
@@ -20,7 +17,6 @@ import { CatalogECommerceStore } from '../../core/stores/catalogs.store.signals'
 export class ProductsComponent implements OnInit {
   store = inject(CatalogECommerceStore);
   // logger = inject(LoggerSeqService);
-
 
   constructor() {
   }

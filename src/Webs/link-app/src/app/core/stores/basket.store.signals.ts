@@ -2,7 +2,7 @@ import { patchState, signalStore, withMethods, withState } from "@ngrx/signals";
 import { PaginatedItems } from "../dtos/paginationResponse.dto"
 import { CatalogItem } from "../models/catalogitem.model"
 import { setPending, withRequestStatus } from "./state.request.features";
-import { BasketServicesService } from "../services/basket-services.service";
+import { BasketServicesService } from "../services/basket.service";
 import { inject } from "@angular/core";
 
 
