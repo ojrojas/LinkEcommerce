@@ -486,3 +486,6 @@ $RECYCLE.BIN/
 # customs
 Instrucciones.md
 src/LinkEcommerce.AppHost/package-lock.json
+
+.DS_Store
+DS_Store
