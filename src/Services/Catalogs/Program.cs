@@ -18,7 +18,6 @@ builder.Services.AddProblemDetails();
 
 var withApiVersioning = builder.Services.AddApiVersioning();
 
-builder.AddDefaultOpenApi(withApiVersioning);
 
 var app = builder.Build();
 
@@ -46,9 +45,6 @@ app.UseAuthentication();
 app.UseRouting();
 app.UseAuthorization();
 
-
 catalogs.MapCatalogEndpointsV1();
-app.UseDefaultOpenApi();
-
 
 app.Run();

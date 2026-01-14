@@ -22,8 +22,6 @@ builder.Services.AddProblemDetails();
 
 var withApiVersioning = builder.Services.AddApiVersioning();
 
-builder.AddDefaultOpenApi(withApiVersioning);
-
 builder.Services.AddCors();
 
 var app = builder.Build();
@@ -67,6 +65,5 @@ app.MapAuthorizeEndpointsV1();
 identity.MapEndpointUserApplicationV1().RequireAuthorization();
 
 app.MapRazorPages();
-app.UseDefaultOpenApi();
 
 app.Run();

@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/LinkEcommerce.AppHost/LinkEcommerce.AppHost.csproj" />
+    <Project Path="src/LinkEcommerce.ServiceDefaults/LinkEcommerce.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/">
+    <Project Path="src/Services/Basket/Basket.csproj" />
+    <Project Path="src/Services/Catalogs/Catalogs.csproj" />
+    <Project Path="src/Services/Identity/Identity.csproj" />
+    <Project Path="src/Services/Orders/Orders.csproj" />
+    <Project Path="src/Services/Payments/Payments.csproj" />
+  </Folder>
+  <Folder Name="/src/Tests/">
+    <Project Path="src/Tests/Basket/Basket.csproj" />
+    <Project Path="src/Tests/Identity/Identity.csproj" />
+    <Project Path="src/Tests/Orders/Orders.csproj" />
+    <Project Path="src/Tests/Payments/Payments.csproj" />
+    <Project Path="src/Tests/WebApps/WebApps.csproj" />
+  </Folder>
+</Solution>

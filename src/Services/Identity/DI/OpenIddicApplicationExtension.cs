@@ -25,8 +25,6 @@ public static class OpenIddicApplicationExtension
             config.SetAuthorizationEndpointUris("/connect/authorize");
             config.SetIntrospectionEndpointUris("/connect/introspect");
             config.SetTokenEndpointUris("/connect/token");
-            config.SetLogoutEndpointUris("/connect/logout");
-
 
             config.AddEncryptionKey(
                     new SymmetricSecurityKey(
@@ -37,7 +35,6 @@ public static class OpenIddicApplicationExtension
             config.UseAspNetCore()
               .DisableTransportSecurityRequirement()
               .EnableAuthorizationEndpointPassthrough()
-              .EnableLogoutEndpointPassthrough()
               .EnableTokenEndpointPassthrough();
         })
 

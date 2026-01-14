@@ -104,7 +104,6 @@ public class SeedIdentity(
                     },
                 Permissions = {
                         Permissions.Endpoints.Token,
-                        Permissions.Endpoints.Logout,
                         Permissions.GrantTypes.ClientCredentials,
                         Permissions.GrantTypes.Implicit,
                         Permissions.GrantTypes.Password,
@@ -134,7 +133,6 @@ public class SeedIdentity(
                 RedirectUris = { new Uri($"{configuration["CatalogApiClient"]}/swagger/oauth2-redirect.html") },
                 Permissions = {
                         Permissions.Endpoints.Token,
-                        Permissions.Endpoints.Logout,
                         Permissions.GrantTypes.ClientCredentials,
                         Permissions.GrantTypes.Implicit,
                         Permissions.GrantTypes.Password,
@@ -163,7 +161,6 @@ public class SeedIdentity(
                 RedirectUris = { new Uri($"{configuration["WebApp"]}/login") },
                 Permissions = {
                         Permissions.Endpoints.Token,
-                        Permissions.Endpoints.Logout,
                         Permissions.GrantTypes.Implicit,
                         Permissions.GrantTypes.RefreshToken,
                         Permissions.Endpoints.Authorization,
