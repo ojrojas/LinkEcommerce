@@ -35,7 +35,7 @@ public static class AuthorizeEndpoints
 #endif
         if (!result.Succeeded)
         {
-            var prompt = string.Join(" ", request.GetPromptValues().Remove("Login"));
+            var prompt = string.Join(" ", request.GetPromptValues().Remove(PromptValues.Login));
 
             var parameters = context.Request.HasFormContentType ?
               context.Request.Form.Where(parameter => parameter.Key != Parameters.Prompt).ToList() :
