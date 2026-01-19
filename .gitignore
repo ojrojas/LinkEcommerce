@@ -489,3 +489,5 @@ src/LinkEcommerce.AppHost/package-lock.json
 
 .DS_Store
 DS_Store
+
+pnpm-lock.yaml
